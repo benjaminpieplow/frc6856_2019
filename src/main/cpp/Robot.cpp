@@ -6,10 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Robot.h"
-
+#include "PilotCTRL.h"
+#include "Movement.h"
 #include <iostream>
 
 #include <frc/smartdashboard/SmartDashboard.h>
+
+void Robot::TeleopPeriodic() {
+  
+}
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -66,5 +71,7 @@ void Robot::TeleopPeriodic() {}
 void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main() { return frc::StartRobot<Robot>(); }
+int main() {
+   return frc::StartRobot<Robot>();
+   }
 #endif
