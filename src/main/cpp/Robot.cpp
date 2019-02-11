@@ -9,7 +9,6 @@
 #include "PilotCTRL.h"
 #include "Movement.h"
 #include <iostream>
-
 #include <frc/smartdashboard/SmartDashboard.h>
 
 
@@ -17,6 +16,8 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  //Calculate 
+  driveTrain::populateMotorVectorFactors
 }
 
 /**
@@ -62,7 +63,6 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-  srx.Set(ControlMode::PercentOutput, 0);
 }
 
 void Robot::TeleopPeriodic() {}
