@@ -12,9 +12,6 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::TeleopPeriodic() {
-  
-}
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);

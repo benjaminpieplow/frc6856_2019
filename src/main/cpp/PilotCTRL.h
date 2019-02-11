@@ -1,4 +1,11 @@
+/*
+This file contains code related to getting information FROM the pilot (via joystick/controller, input panel, etc)
+*/
+
+
 #include <frc/Joystick.h>
+
+#pragma once
 
 //Raw Values from Joystick (-1 to 1, 0 at rest)
 static double xAnalogVel = 0;
@@ -11,7 +18,6 @@ static double zRefinedRot = 0;
 
 class CTRLInput {
     public:
-
 
     //Cal to input data from controllers
     void getController() {
@@ -32,4 +38,4 @@ class CTRLInput {
     private:
     frc::Joystick primaryJoy{0};
 
-}
+};
