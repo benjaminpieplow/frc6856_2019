@@ -12,12 +12,15 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 
+
+//CTRLInput* pUserInput = new void();
+
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  //Calculate 
-  driveTrain::populateMotorVectorFactors
+  //Calculate motor vector factors
+  driveTrain::populateMotorVectorFactors;
 }
 
 /**
@@ -28,7 +31,23 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  //Define pilotInput and Drivetrain as object-ish things
+  CTRLInput pilotInput;
+  driveTrain primaryDrive;
+  
+  //Get Pilot's input data
+  pilotInput.getController();
+  
+  //Run input refinement (dampen, bellcurve, etc)
+  pilotInput.refineInput();
+
+  //Calculate per-motor vectors
+  primaryDrive.calculateDriveMotorVectors();
+
+  //Set Update ESCs via CAN
+  primaryDrive.setDriveMotorPower();
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select

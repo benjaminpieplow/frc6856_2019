@@ -20,7 +20,7 @@ class CTRLInput {
     public:
 
     //Cal to input data from controllers
-    void getController() {
+    virtual void getController() {
         xAnalogVel = primaryJoy.GetRawAxis(0);
         yAnalogVel = primaryJoy.GetRawAxis(1);
         zAnalogRot = primaryJoy.GetRawAxis(4);
@@ -28,7 +28,7 @@ class CTRLInput {
     }
 
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second
-    void refineInput() {
+    virtual void refineInput() {
         const double modifier = 0.3;
         xRefinedVel = xAnalogVel * modifier;
         yRefinedVel = yAnalogVel * modifier;

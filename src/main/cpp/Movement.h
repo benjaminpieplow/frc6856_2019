@@ -18,35 +18,33 @@ double motorAngles[4] = {0.78539816339744830961566084581988, 2.35619449019234492
 //sin(theta) where theta is wheel angle where [0][i] will be sin (Y-axis) and [1][i] will be cos (X-axis)
 double motorVectorFactor[2][4];
 
+//Create an array of objects for motor controllers
+TalonSRX driveWheel[4] = {{10}, {11}, {12}, {13}};
+
 
 
 class driveTrain {
     public:
 
     //This code uses the motor angles, currently set above (may be ported to .conf file in the future), to calculate the applied power factors
-    void populateMotorVectorFactors() {
+    static void populateMotorVectorFactors() {
         for (int i = 0; i < 2; i++) {
             motorVectorFactor[0][i] = sin(motorAngles[i]);
             motorVectorFactor[1][i] = cos(motorAngles[i]);
         }
     }
 
-    //Initialize Motor Controllers
-    void initDriveTrain() {
-        for (int i = 0; i < 3; i++) {
-            
-        }
-    }
-
-    void calculateMotorVectors() {
+    //Use the values set in populateMotorVectorFactors to set the required power for each motor
+    static void calculateDriveMotorVectors() {
         for (int i = 0; i < 3; i++) {
             motorPower[i] = -1 * motorVectorFactor[0][i] * yRefinedVel - motorVectorFactor[1][i] * xRefinedVel + zRefinedRot;
         }
     }
 
-    void setMotorPower() {
+    //Apply the set required motor power to each drivetrain motor
+    static void setDriveMotorPower() {
         for (int i = 0; i < 3; i++) {
-
+            driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);
         }
     }
 };
