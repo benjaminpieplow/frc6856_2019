@@ -4,8 +4,6 @@ In the future, this can contain open feedback loop code (gyro, wheel encoders)
 */
 
 #include <frc/TimedRobot.h>
-#include <ctre/Phoenix.h>
+#include "ctre/Phoenix.h"
 
-
-
-
+TalonSRX srx = {0};

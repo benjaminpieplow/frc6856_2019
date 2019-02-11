@@ -61,7 +61,9 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+  srx.Set(ControlMode::PercentOutput, 0);
+}
 
 void Robot::TeleopPeriodic() {}
 
