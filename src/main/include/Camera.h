@@ -9,6 +9,7 @@ CAMERA PROGRAMMING, INCLUDES INIT, STREAMING, AND SETTING RES
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
 #include "cscore.h"
+#include <sstream>
 #include <cameraserver/CameraServer.h>
 
 //INITITATES / CONNECTS THE CAMERAS TO THE RIO, IF NO VALUES ARE SPECIFIED, DEFUALT CONSTRUCOTR WILL BE USED
@@ -20,7 +21,7 @@ namespace botVideo
 void StreamBotCameras(int resWidth, int res_height, int fps)
 {
     //defining camera, adds name and USB port
-    cs::UsbCamera frontCamera{"camera1", 0};  
+    cs::UsbCamera frontCamera{"camera1", 0};
     frontCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
 
     //setting res
@@ -35,10 +36,12 @@ void StreamBotCameras(int resWidth, int res_height, int fps)
     cs::CvSource vidStream = frc::CameraServer::GetInstance()->PutVideo("Gray", resWidth, res_height);
     frontCameraSink.SetSource(frontCamera);
 
-//making mat array (images that are written in arrays)
+    //making mat array (images that are written in arrays)
     cv::Mat source;
     cv::Mat output;
-
+    
+    //telling drivers, cameras are online
+    std::cout << "Camera Online";
     //displaying video to driver station
     while (true)
     {
@@ -46,15 +49,13 @@ void StreamBotCameras(int resWidth, int res_height, int fps)
         cvtColor(source, output, cv::COLOR_BGR2GRAY);
         vidStream.PutFrame(source);
     }
-
 }
-
 
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
 void StreamBotCameras()
 {
-   //defining camera, adds name and USB port
-    cs::UsbCamera frontCamera{"camera1", 0};  
+    //defining camera, adds name and USB port
+    cs::UsbCamera frontCamera{"camera1", 0};
     frontCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
 
     //setting res
@@ -69,10 +70,13 @@ void StreamBotCameras()
     cs::CvSource vidStream = frc::CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
     frontCameraSink.SetSource(frontCamera);
 
-//making mat array (images that are written in arrays)
+    //making mat array (images that are written in arrays)
     cv::Mat source;
     cv::Mat output;
 
+    //telling drivers cameras are online
+    std::cout << "Camera Online";
+    
     //displaying video to driver station
     while (true)
     {
@@ -80,7 +84,6 @@ void StreamBotCameras()
         cvtColor(source, output, cv::COLOR_BGR2GRAY);
         vidStream.PutFrame(source);
     }
-
 }
 
-}
+} // namespace botVideo
