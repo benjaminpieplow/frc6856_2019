@@ -57,10 +57,6 @@ class driveTrain {
 
     //Apply the set required motor power to each drivetrain motor
     static void setDriveMotorPower() {
-        std::ostringstream strs;
-        strs << motorPower[2];
-        std::string str = strs.str();
-        frc::SmartDashboard::PutString("DB/String 1", str);
         for (int i = 0; i < 4; i++) {
             driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);
         }

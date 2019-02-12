@@ -8,8 +8,12 @@
 #include "Robot.h"
 #include "PilotCTRL.h"
 #include "Movement.h"
+//#include "WPILib.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "cameraserver/CameraServer.h"
+
+//frc::CameraServer cam_1;
 
 
 driveTrain primaryDrive;
@@ -22,6 +26,8 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   //Calculate motor vector factors
   primaryDrive.populateMotorVectorFactors();
+  //I don't know what the pointer does. The website said to use it, I used it, it works.
+  frc::CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 /**
@@ -47,6 +53,7 @@ void Robot::RobotPeriodic() {
 
   //Set Update ESCs via CAN
   primaryDrive.setDriveMotorPower();
+
 }
 
 /**
