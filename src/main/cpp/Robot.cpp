@@ -12,15 +12,16 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 
+driveTrain primaryDrive;
 
-//CTRLInput* pUserInput = new void();
 
 void Robot::RobotInit() {
+  //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   //Calculate motor vector factors
-  driveTrain::populateMotorVectorFactors;
+  primaryDrive.populateMotorVectorFactors();
 }
 
 /**
@@ -34,7 +35,6 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   //Define pilotInput and Drivetrain as object-ish things
   CTRLInput pilotInput;
-  driveTrain primaryDrive;
   
   //Get Pilot's input data
   pilotInput.getController();
