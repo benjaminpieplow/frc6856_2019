@@ -10,9 +10,11 @@
 #include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include "cameraserver/CameraServer.h"
 
-//frc::CameraServer cam_1;
+
+//Temporarily Disabled as not relevant to branch
+//#include "cameraserver/CameraServer.h"
+
 
 
 
@@ -26,8 +28,11 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   //Calculate motor vector factors
   primaryDrive.populateMotorVectorFactors();
+
+
   //I don't know what the pointer does. The website said to use it, I used it, it works.
-  frc::CameraServer::GetInstance()->StartAutomaticCapture();
+  //Temporarily Disabled as not relevant to branch
+  //frc::CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 /**
@@ -38,23 +43,7 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {
-  //Define pilotInput and Drivetrain as object-ish things
-  CTRLInput pilotInput;
-  
-  //Get Pilot's input data
-  pilotInput.getController();
-  
-  //Run input refinement (dampen, bellcurve, etc)
-  pilotInput.refineInput();
-
-  //Calculate per-motor vectors
-  primaryDrive.calculateDriveMotorVectors();
-
-  //Set Update ESCs via CAN
-  primaryDrive.setDriveMotorPower();
-
-}
+void Robot::RobotPeriodic() {}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -91,7 +80,23 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
 }
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  
+  //Define pilotInput and Drivetrain as object-ish things
+  CTRLInput pilotInput;
+  
+  //Get Pilot's input data
+  pilotInput.getController();
+  
+  //Run input refinement (dampen, bellcurve, etc)
+  pilotInput.refineInput();
+
+  //Calculate per-motor vectors
+  primaryDrive.calculateDriveMotorVectors();
+
+  //Set Update ESCs via CAN
+  primaryDrive.setDriveMotorPower();
+}
 
 void Robot::TestPeriodic() {}
 
