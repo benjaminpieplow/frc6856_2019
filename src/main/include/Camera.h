@@ -18,72 +18,60 @@ CAMERA PROGRAMMING, INCLUDES INIT, STREAMING, AND SETTING RES
 namespace botVideo
 {
 //STREAMS THE CAMERA(S) TO THE DRIVER STATION
-void StreamBotCameras(int resWidth, int res_height, int fps)
+void StreamBotCameras(int resWidth, int resHeight, int fps)
 {
-    //defining camera, adds name and USB port
-    cs::UsbCamera frontCamera{"camera1", 0};
-    frontCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
-
-    //setting res
-    frontCamera.SetResolution(resWidth, res_height);
-    //setting frames per second
-    frontCamera.SetFPS(fps);
-
-    //creating sink to display vid
-    cs::CvSink frontCameraSink = frc::CameraServer::GetInstance()->GetVideo();
-
-    //creating stream to output video to be outputted to driver station
-    cs::CvSource vidStream = frc::CameraServer::GetInstance()->PutVideo("Gray", resWidth, res_height);
-    frontCameraSink.SetSource(frontCamera);
-
-    //making mat array (images that are written in arrays)
+    //starting camera
+    cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    camera.SetResolution(resWidth, resHeight);
+    cs::CvSink cvSink = frc::CameraServer::GetInstance()->GetVideo();
+    cs::CvSource outputStreamStd = frc::CameraServer::GetInstance()->PutVideo("Gray", resWidth, resHeight);
     cv::Mat source;
     cv::Mat output;
-    
-    //telling drivers, cameras are online
-    std::cout << "Camera Online";
-    //displaying video to driver station
     while (true)
     {
-        frontCameraSink.GrabFrame(source);
+        cvSink.GrabFrame(source);
         cvtColor(source, output, cv::COLOR_BGR2GRAY);
-        vidStream.PutFrame(source);
+        outputStreamStd.PutFrame(output);
     }
 }
 
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
 void StreamBotCameras()
 {
-    //defining camera, adds name and USB port
-    cs::UsbCamera frontCamera{"camera1", 0};
-    frontCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
-
+    //instantiaing CS_Core USB camera
+    cs::UsbCamera mainCamera;
     //setting res
-    frontCamera.SetResolution(640, 480);
-    //setting frames per second
-    frontCamera.SetFPS(15);
+    mainCamera.SetResolution(640, 480);
+    //setting fps
+    mainCamera.SetFPS(15);
+    //streaming camera...hopefully to dashboard
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+}
 
-    //creating sink to display vid
-    cs::CvSink frontCameraSink = frc::CameraServer::GetInstance()->GetVideo();
+/*
+just ignore this method, just a little project, I am just trying to do some video processing (with as little overhead as possible)
+*/
+double checkSimularityToOrgin()
+{
 
-    //creating stream to output video to be outputted to driver station
-    cs::CvSource vidStream = frc::CameraServer::GetInstance()->PutVideo("Gray", 640, 480);
-    frontCameraSink.SetSource(frontCamera);
+    /*
+    cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    //setting resolution
+        camera.SetResolution(640, 480);
+        //creating image (video sink)
+        cs::CvSink cvSink = frc::CameraServer::GetInstance()->GetVideo();
+        cs::CvSource outputStreamStd = frc::CameraServer::GetInstance()->PutVideo("Gray", resWidth, resHeight);
 
-    //making mat array (images that are written in arrays)
-    cv::Mat source;
-    cv::Mat output;
+        //creating image matrixes
+        cv::Mat source;
+        cv::Mat output;
 
-    //telling drivers cameras are online
-    std::cout << "Camera Online";
-    
-    //displaying video to driver station
-    while (true)
-    {
-        frontCameraSink.GrabFrame(source);
-        cvtColor(source, output, cv::COLOR_BGR2GRAY);
-        vidStream.PutFrame(source);
-    }
+        while(true) {
+            cvSink.GrabFrame(source);
+            cvtColor(source, output, cv::COLOR_BGR2GRAY);
+            outputStreamStd.PutFrame(output);
+        }
+   */
 }
 
 } // namespace botVideo
