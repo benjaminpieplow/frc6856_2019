@@ -20,19 +20,14 @@ namespace botVideo
 //STREAMS THE CAMERA(S) TO THE DRIVER STATION
 void StreamBotCameras(int resWidth, int resHeight, int fps)
 {
-    //starting camera
-    cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
-    camera.SetResolution(resWidth, resHeight);
-    cs::CvSink cvSink = frc::CameraServer::GetInstance()->GetVideo();
-    cs::CvSource outputStreamStd = frc::CameraServer::GetInstance()->PutVideo("Gray", resWidth, resHeight);
-    cv::Mat source;
-    cv::Mat output;
-    while (true)
-    {
-        cvSink.GrabFrame(source);
-        cvtColor(source, output, cv::COLOR_BGR2GRAY);
-        outputStreamStd.PutFrame(output);
-    }
+   //instantiaing CS_Core USB camera
+    cs::UsbCamera mainCamera;
+    //setting res
+    mainCamera.SetResolution(resWidth, resHeight);
+    //setting fps
+    mainCamera.SetFPS(fps);
+    //streaming camera...hopefully to dashboard
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
@@ -45,7 +40,7 @@ void StreamBotCameras()
     //setting fps
     mainCamera.SetFPS(15);
     //streaming camera...hopefully to dashboard
-    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 /*
