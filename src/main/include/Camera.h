@@ -36,7 +36,7 @@ void StreamBotCameras()
     //instantiaing CS_Core USB camera
     cs::UsbCamera mainCamera;
     //setting res
-    mainCamera.SetResolution(640, 480);
+    mainCamera.SetResolution(320, 240);
     //setting fps
     mainCamera.SetFPS(15);
     //streaming camera...hopefully to dashboard
