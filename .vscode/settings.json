@@ -12,5 +12,8 @@
     ".project": true
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
-  "C_Cpp.intelliSenseEngineFallback": "Disabled"
+  "files.associations": {
+    "iostream": "cpp",
+    "cstddef": "cpp"
+  }
 }
