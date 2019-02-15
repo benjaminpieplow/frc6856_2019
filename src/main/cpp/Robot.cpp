@@ -8,13 +8,31 @@
 #include "Camera.h"
 #include "Robot.h"
 #include <iostream>
+#include "PilotCTRL.h"
+#include "Movement.h"
+#include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::RobotInit()
-{
+//Temporarily Disabled as not relevant to branch
+//#include "cameraserver/CameraServer.h"
+
+
+
+driveTrain primaryDrive;
+
+
+void Robot::RobotInit() {
+  //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  //Calculate motor vector factors
+  primaryDrive.populateMotorVectorFactors();
+
+
+  //I don't know what the pointer does. The website said to use it, I used it, it works.
+  //Temporarily Disabled as not relevant to branch
+  //frc::CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 /**
@@ -67,9 +85,26 @@ void Robot::AutonomousPeriodic()
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  
+  //Define pilotInput and Drivetrain as object-ish things
+  CTRLInput pilotInput;
+  
+  //Get Pilot's input data
+  pilotInput.getController();
+  
+  //Run input refinement (dampen, bellcurve, etc)
+  pilotInput.refineInput();
+
+  //Calculate per-motor vectors
+  primaryDrive.calculateDriveMotorVectors();
+
+  //Set Update ESCs via CAN
+  primaryDrive.setDriveMotorPower();
+}
 
 void Robot::TestPeriodic() {}
 
