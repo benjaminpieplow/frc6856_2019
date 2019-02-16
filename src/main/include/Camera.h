@@ -20,8 +20,8 @@ namespace botVideo
 //STREAMS THE CAMERA(S) TO THE DRIVER STATION
 void StreamBotCameras(int resWidth, int resHeight, int fps)
 {
-   //instantiaing CS_Core USB camera
-    cs::UsbCamera mainCamera;
+   //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
+    cs::UsbCamera mainCamera {"frontCamera", 0};
     //setting res
     mainCamera.SetResolution(resWidth, resHeight);
     //setting fps
@@ -33,8 +33,8 @@ void StreamBotCameras(int resWidth, int resHeight, int fps)
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
 void StreamBotCameras()
 {
-    //instantiaing CS_Core USB camera
-    cs::UsbCamera mainCamera;
+    //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
+    cs::UsbCamera mainCamera {"frontCamera", 0};
     //setting res
     mainCamera.SetResolution(640, 480);
     //setting fps
