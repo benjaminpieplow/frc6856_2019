@@ -36,11 +36,12 @@ void StreamBotCameras()
     //instantiaing CS_Core USB camera
     cs::UsbCamera mainCamera;
     //setting res
-    mainCamera.SetResolution(320, 240);
+    mainCamera.SetResolution(640, 480);
     //setting fps
     mainCamera.SetFPS(15);
-    //streaming camera...hopefully to dashboard
-    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    //streaming camera to dashboard. Currently set for dual camera
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(1);
 }
 
 /*
