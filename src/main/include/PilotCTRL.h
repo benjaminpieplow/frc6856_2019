@@ -33,6 +33,7 @@ class CTRLInput {
         refineInput();
     }
 
+
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
     virtual void refineInput() {
         const double modifier = 0.2;

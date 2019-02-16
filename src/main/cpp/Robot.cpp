@@ -88,9 +88,6 @@ void Robot::TeleopPeriodic() {
   
   //Get Pilot's input data
   pilotInput.getController();
-  
-  //Run input refinement (dampen, bellcurve, etc)
-  pilotInput.refineInput();
 
   //Calculate per-motor vectors
   primaryDrive.calculateDriveMotorVectors();
