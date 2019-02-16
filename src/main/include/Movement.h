@@ -51,7 +51,7 @@ class driveTrain {
     //Use the values set in populateMotorVectorFactors to set the required power for each motor
     virtual void calculateDriveMotorVectors() {
         for (int i = 0; i < 4; i++) {
-            motorPower[i] = -1 * motorVectorFactor[0][i] * yRefinedVel - motorVectorFactor[1][i] * xRefinedVel + zRefinedRot;
+            motorPower[i] = -1 * motorVectorFactor[0][i] * yRefinedVel + motorVectorFactor[1][i] * xRefinedVel + zRefinedRot * 0.7;
         }
     }
 
