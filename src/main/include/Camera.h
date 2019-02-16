@@ -20,27 +20,28 @@ namespace botVideo
 //STREAMS THE CAMERA(S) TO THE DRIVER STATION
 void StreamBotCameras(int resWidth, int resHeight, int fps)
 {
-   //instantiaing CS_Core USB camera
-    cs::UsbCamera mainCamera;
+   //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
+    cs::UsbCamera mainCamera {"frontCamera", 0};
     //setting res
     mainCamera.SetResolution(resWidth, resHeight);
     //setting fps
     mainCamera.SetFPS(fps);
     //streaming camera...hopefully to dashboard
-    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
 }
 
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
 void StreamBotCameras()
 {
-    //instantiaing CS_Core USB camera
-    cs::UsbCamera mainCamera;
+    //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
+    cs::UsbCamera mainCamera {"frontCamera", 0};
     //setting res
-    mainCamera.SetResolution(320, 240);
+    mainCamera.SetResolution(640, 480);
     //setting fps
     mainCamera.SetFPS(15);
-    //streaming camera...hopefully to dashboard
-    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    //streaming camera to dashboard. Currently set for dual camera
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(1);
 }
 
 /*

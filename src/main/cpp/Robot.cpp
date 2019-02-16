@@ -20,7 +20,6 @@
 
 driveTrain primaryDrive;
 
-
 void Robot::RobotInit() {
   //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -29,10 +28,7 @@ void Robot::RobotInit() {
   //Calculate motor vector factors
   primaryDrive.populateMotorVectorFactors();
 
-
-  //I don't know what the pointer does. The website said to use it, I used it, it works.
-  //Temporarily Disabled as not relevant to branch
-  //frc::CameraServer::GetInstance()->StartAutomaticCapture();
+  botVideo::StreamBotCameras();
 }
 
 /**
@@ -106,12 +102,12 @@ void Robot::TeleopPeriodic() {
   primaryDrive.setDriveMotorPower();
 }
 
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main()
 {
-  botVideo::StreamBotCameras();
   return frc::StartRobot<Robot>();
 }
 #endif
