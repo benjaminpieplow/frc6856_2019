@@ -28,10 +28,6 @@ void Robot::RobotInit() {
   //Calculate motor vector factors
   primaryDrive.populateMotorVectorFactors();
 
-
-  //I don't know what this line does. The website said to use it, I used it, it worked.
-  //Temporarily Disabled as not relevant to branch
-  //frc::CameraServer::GetInstance()->StartAutomaticCapture();
   botVideo::StreamBotCameras();
 }
 

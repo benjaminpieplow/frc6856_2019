@@ -27,7 +27,7 @@ void StreamBotCameras(int resWidth, int resHeight, int fps)
     //setting fps
     mainCamera.SetFPS(fps);
     //streaming camera...hopefully to dashboard
-    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
+    mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
 }
 
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
