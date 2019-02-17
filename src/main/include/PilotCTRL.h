@@ -5,6 +5,7 @@ This file contains code related to interfacing with the pilot. It currently pull
 
 #include "IO.cpp"
 #include <frc/Joystick.h>
+#include <frc/WPILib.h>
 
 #pragma once
 
@@ -34,13 +35,13 @@ class CTRLInput {
         refineInput();
     }
 
-
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
     virtual void refineInput() {
         
         frc::DigitalInput testLimitSwitch(0);
 
-        if (! (testLimitSwitch.Get()) ) {
+        //This is a proof-of-concept to test limit switch functionality. A pressed limit switch will disable the robot.
+        if ( ! testLimitSwitch.Get()  ) {
             const double modifier = 0.0;
             xRefinedVel = xAnalogVel * modifier;
             yRefinedVel = yAnalogVel * modifier;
