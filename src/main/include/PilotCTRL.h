@@ -3,6 +3,7 @@ This file contains code related to interfacing with the pilot. It currently pull
 */
 
 
+#include "IO.cpp"
 #include <frc/Joystick.h>
 
 #pragma once
@@ -36,10 +37,24 @@ class CTRLInput {
 
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
     virtual void refineInput() {
-        const double modifier = 0.2;
-        xRefinedVel = xAnalogVel * modifier;
-        yRefinedVel = yAnalogVel * modifier;
-        zRefinedRot = zAnalogRot * modifier;
+        
+        frc::DigitalInput testLimitSwitch(0);
+
+        if (! (testLimitSwitch.Get()) ) {
+            const double modifier = 0.0;
+            xRefinedVel = xAnalogVel * modifier;
+            yRefinedVel = yAnalogVel * modifier;
+            zRefinedRot = zAnalogRot * modifier;
+        }
+        else
+        {
+            const double modifier = 0.2;
+            xRefinedVel = xAnalogVel * modifier;
+            yRefinedVel = yAnalogVel * modifier;
+            zRefinedRot = zAnalogRot * modifier;
+
+        }
+
     }
 
     private:

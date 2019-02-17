@@ -5,6 +5,8 @@ This file contains code to actuate movements of the robot, like drivetrain or ar
 #include <frc/TimedRobot.h>
 #include "ctre/Phoenix.h"
 #include <math.h>
+#include "PilotCTRL.h"
+
 
 /* Really good for Testing
 Step 1: Enable these:

@@ -12,7 +12,7 @@
 #include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
-
+#include "IO.cpp"
 
 
 driveTrain primaryDrive;
@@ -26,6 +26,8 @@ void Robot::RobotInit() {
   primaryDrive.populateMotorVectorFactors();
 
   botVideo::StreamBotCameras();
+
+
 }
 
 /**
