@@ -12,7 +12,9 @@
 #include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
-
+#include <IO.h>
+#include <frc/Talon.h>
+#include <frc/Encoder.h>
 
 
 driveTrain primaryDrive;
@@ -26,6 +28,11 @@ void Robot::RobotInit() {
   primaryDrive.populateMotorVectorFactors();
 
   botVideo::StreamBotCameras();
+  TalonSRX testMotor {0};
+  
+  //DEFINING THE MOTOR ENCODERS ENUMS
+  ctre::phoenix::motorcontrol::CTRE_MagEncoder_Absolute frontLeft{0, 0};
+
 }
 
 /**
