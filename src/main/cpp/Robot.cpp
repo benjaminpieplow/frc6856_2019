@@ -9,7 +9,7 @@
 #include "Robot.h"
 #include <iostream>
 #include "PilotCTRL.h"
-//#include "Movement.h"
+#include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "IO.cpp"
@@ -24,7 +24,6 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
-
   botVideo::StreamBotCameras();
 
 
@@ -86,7 +85,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
   
   //Define pilotInput and Drivetrain as object-ish things
- // CTRLInput pilotInput;
+  //CTRLInput pilotInput;
   
   //Get Pilot's input data
   m_pilotInput.getController();

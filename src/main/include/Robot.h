@@ -12,6 +12,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "Movement.h"
+#include "DriveTeamIO.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -30,6 +31,6 @@ class Robot : public frc::TimedRobot {
   std::string m_autoSelected;
 
 
-  CTRLInput m_pilotInput;
+  PilotInput m_pilotInput;
   driveTrain m_primaryDrive;
 };

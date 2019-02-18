@@ -2,34 +2,33 @@
 This file contains code related to interfacing with the pilot. It currently pulls data from the controller, but will be expanded to push data back too
 */
 
+/* MOVED TO PilotIO.cpp
+
+
+
 
 #include "IO.cpp"
 #include <frc/Joystick.h>
 #include <frc/WPILib.h>
+#include <iostream>
 
 #pragma once
 
-//Raw Values from Joystick (-1 to 1, 0 at rest)
-static double xAnalogVel = 0;
-static double yAnalogVel = 0;
-static double zAnalogRot = 0;
-
-//Refined Raw Values (dampened/curved)
-static double xRefinedVel = 0;
-static double yRefinedVel = 0;
-static double zRefinedRot = 0;
 
 class CTRLInput {
-    /*
-    This class contains code for pulling and processing code for the robot control. 
-    */
+
     public:
+
+    //Refined Raw Values (dampened/curved)
+    double xRefinedVel = 0;
+    double yRefinedVel = 0;
+    double zRefinedRot = 0;
 
     //Call to input data from controllers
     virtual void getController() {
-        xAnalogVel = primaryJoy.GetRawAxis(0);
-        yAnalogVel = primaryJoy.GetRawAxis(1);
-        zAnalogRot = primaryJoy.GetRawAxis(4);
+        this->xAnalogVel = primaryJoy.GetRawAxis(0);
+        this->yAnalogVel = primaryJoy.GetRawAxis(1);
+        this->zAnalogRot = primaryJoy.GetRawAxis(4);
         //refineInput is called here because it is currently processing a safety measure and therefore cannot be missed.
         //In future versions, the refineInput function will be more flexible and therefore called from other areas of the code.
         refineInput();
@@ -44,13 +43,24 @@ class CTRLInput {
         //if ( testLimitSwitch.Get()  )
 
             const double modifier = 0.2;
-            xRefinedVel = xAnalogVel * modifier;
-            yRefinedVel = yAnalogVel * modifier;
-            zRefinedRot = zAnalogRot * modifier;
+            this->xRefinedVel = xAnalogVel * modifier;
+            this->yRefinedVel = yAnalogVel * modifier;
+            this->zRefinedRot = zAnalogRot * modifier;
 
     }
 
     private:
     frc::Joystick primaryJoy{0};
 
+    //Raw Values from Joystick (-1 to 1, 0 at rest)
+    double xAnalogVel = 0;
+    double yAnalogVel = 0;
+    double zAnalogRot = 0;
+
+
+
+
+
 };
+
+*/
