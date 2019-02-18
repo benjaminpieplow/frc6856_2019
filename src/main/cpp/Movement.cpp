@@ -1,5 +1,7 @@
 #include "Movement.h"
 #include <iostream>
+#include <DriveTeamIO.h>
+#include "Robot.h"
 
 driveTrain::driveTrain()
 {
@@ -38,7 +40,8 @@ void driveTrain::populateMotorVectorFactors()
 void driveTrain::calculateDriveMotorVectors() 
 {
     for (int i = 0; i < 4; i++) {
-        this->motorPower[i] = -1 * motorVectorFactor[0][i] * yRefinedVel + motorVectorFactor[1][i] * xRefinedVel + zRefinedRot * 0.7;
+        //xRefinedVel, yRefinedVel and 
+        this->motorPower[i] = -1 * this->motorVectorFactor[0][i] * m_pilotInput.yRefinedVel + this->motorVectorFactor[1][i] * m_pilotInput.m_pilotInput.xRefinedVel + m_pilotInput.m_pilotInput.zRefinedRot * 0.7;
     }
 }
 

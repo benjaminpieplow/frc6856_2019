@@ -1,9 +1,10 @@
-/*
-This file contains code related to interfacing with the pilot. It currently pulls data from the controller, but will be expanded to push data back too
-*/
+//DEPRECATED IN "Code-Refactoring" BRANCH - GO AWAY!
+
 
 /* MOVED TO PilotIO.cpp
 
+
+//This file contains code related to interfacing with the pilot. It currently pulls data from the controller, but will be expanded to push data back too
 
 
 

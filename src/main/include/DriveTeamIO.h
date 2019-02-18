@@ -1,6 +1,8 @@
+#pragma once
 
 #include <frc/Joystick.h>
 #include <frc/WPILib.h>
+
 
 class PilotInput {
     /*
@@ -16,7 +18,7 @@ class PilotInput {
     void getController();
 
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
-    void refineInput();
+    double refineInput();
 
     
     //Refined Raw Values (dampened/curved)
@@ -26,7 +28,8 @@ class PilotInput {
 
     private:
     //Pilot's Joystick
-    frc::Controller* primaryJoy{0};
+    frc::Joystick* primaryJoy{0};
+
 
     //Raw Values from Joystick (-1 to 1, 0 at rest)
     double xAnalogVel = 0;

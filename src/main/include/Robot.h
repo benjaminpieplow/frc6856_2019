@@ -24,13 +24,14 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
 
+  
+
  private:
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
 
-
-  PilotInput m_pilotInput;
   driveTrain m_primaryDrive;
+  PilotInput m_pilotInput;
 };
