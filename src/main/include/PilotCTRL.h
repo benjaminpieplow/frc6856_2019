@@ -41,20 +41,12 @@ class CTRLInput {
         frc::DigitalInput testLimitSwitch(0);
 
         //This is a proof-of-concept to test limit switch functionality. A pressed limit switch will disable the robot.
-        if ( ! testLimitSwitch.Get()  ) {
-            const double modifier = 0.0;
-            xRefinedVel = xAnalogVel * modifier;
-            yRefinedVel = yAnalogVel * modifier;
-            zRefinedRot = zAnalogRot * modifier;
-        }
-        else
-        {
+        //if ( testLimitSwitch.Get()  )
+
             const double modifier = 0.2;
             xRefinedVel = xAnalogVel * modifier;
             yRefinedVel = yAnalogVel * modifier;
             zRefinedRot = zAnalogRot * modifier;
-
-        }
 
     }
 

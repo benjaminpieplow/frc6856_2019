@@ -9,13 +9,13 @@
 #include "Robot.h"
 #include <iostream>
 #include "PilotCTRL.h"
-#include "Movement.h"
+//#include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "IO.cpp"
 
 
-driveTrain primaryDrive;
+//driveTrain primaryDrive;
 
 void Robot::RobotInit() {
   //This code is here by default and therefore should not be removed
@@ -23,7 +23,7 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   //Calculate motor vector factors
-  primaryDrive.populateMotorVectorFactors();
+  m_primaryDrive.populateMotorVectorFactors();
 
   botVideo::StreamBotCameras();
 
@@ -86,16 +86,16 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
   
   //Define pilotInput and Drivetrain as object-ish things
-  CTRLInput pilotInput;
+ // CTRLInput pilotInput;
   
   //Get Pilot's input data
-  pilotInput.getController();
+  m_pilotInput.getController();
 
   //Calculate per-motor vectors
-  primaryDrive.calculateDriveMotorVectors();
+  m_primaryDrive.calculateDriveMotorVectors();
 
   //Set Update ESCs via CAN
-  primaryDrive.setDriveMotorPower();
+  m_primaryDrive.setDriveMotorPower();
 }
 
 void Robot::TestPeriodic() {
