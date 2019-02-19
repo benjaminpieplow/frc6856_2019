@@ -5,25 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Camera.h"
-#include "Robot.h"
-#include <iostream>
-#include "PilotCTRL.h"
-#include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include "IO.cpp"
+#include "Camera.h"
+#include "Robot.h"
+#include "Movement.h"
+//#include "IO.cpp"
+//#include "PilotCTRL.h"
+
+
 
 
 //driveTrain primaryDrive;
 
 void Robot::RobotInit() {
+
   //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
+
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
+
+  //Initialize Global Variables
+  m_pilotInput.initGlobalVars();
+
   botVideo::StreamBotCameras();
 
 
@@ -80,15 +89,16 @@ void Robot::AutonomousPeriodic()
 }
 
 void Robot::TeleopInit() {
+  std::cout << "TeleopInit Complete";
 }
 
 void Robot::TeleopPeriodic() {
   
   //Define pilotInput and Drivetrain as object-ish things
-  //CTRLInput pilotInput;
+  //PilotInput pilotInput;
   
   //Get Pilot's input data
-  m_pilotInput.getController();
+  Robot::m_pilotInput.getController();
 
   //Calculate per-motor vectors
   m_primaryDrive.calculateDriveMotorVectors();
@@ -103,6 +113,7 @@ void Robot::TestPeriodic() {
 #ifndef RUNNING_FRC_TESTS
 int main()
 {
+  
   return frc::StartRobot<Robot>();
 }
 #endif

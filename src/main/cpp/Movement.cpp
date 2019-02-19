@@ -1,7 +1,12 @@
+/*
+*/
+
+
 #include "Movement.h"
 #include <iostream>
 #include <DriveTeamIO.h>
 #include "Robot.h"
+#include "GlobalVars.h"
 
 driveTrain::driveTrain()
 {
@@ -9,10 +14,10 @@ driveTrain::driveTrain()
     //motorPower[1] = 0.0;
     //motorPower[2] = 0.0;
     //motorPower[3] = 0.0;
-    //Feeney said to do this ^ but try this v and see if it works.
+    //Feeney said to do this ^ but try this v and see if it works. Once this compiles, delete either the above or below
     motorPower[4] = {0.0};
-
- //   TalonSRX* pDriveWheel[4];// = {{10}, {11}, {12}, {13}};
+    
+    //Create an array of TalonSRX objects for drive wheels, these will be addressed by the motors
     pDriveWheel[0] = new TalonSRX(10);
     pDriveWheel[1] = new TalonSRX(11);
     pDriveWheel[2] = new TalonSRX(12);
@@ -21,6 +26,7 @@ driveTrain::driveTrain()
 
 driveTrain::~driveTrain()
 {
+    //Delete old Wheel objects
     delete pDriveWheel[0];
     delete pDriveWheel[1];
     delete pDriveWheel[2]; 
@@ -40,8 +46,8 @@ void driveTrain::populateMotorVectorFactors()
 void driveTrain::calculateDriveMotorVectors() 
 {
     for (int i = 0; i < 4; i++) {
-        //xRefinedVel, yRefinedVel and 
-        this->motorPower[i] = -1 * this->motorVectorFactor[0][i] * m_pilotInput.yRefinedVel + this->motorVectorFactor[1][i] * m_pilotInput.m_pilotInput.xRefinedVel + m_pilotInput.m_pilotInput.zRefinedRot * 0.7;
+        //xRefinedVel, yRefinedVel and zRefinedRot
+        this->motorPower[i] = -1 * this->motorVectorFactor[0][i] * yRefinedVel + this->motorVectorFactor[1][i] * xRefinedVel + zRefinedRot * 0.7;
     }
 }
 
@@ -50,6 +56,5 @@ void driveTrain::setDriveMotorPower() {
     for (int i = 0; i < 4; i++) {
         //driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);
         this->pDriveWheel[i]->Set(ControlMode::PercentOutput, motorPower[i]);
-
     }
 }
