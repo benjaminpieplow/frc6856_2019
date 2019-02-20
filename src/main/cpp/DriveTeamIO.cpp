@@ -28,11 +28,11 @@ void PilotInput::getController()
     this->zAnalogRot = primaryJoy.GetRawAxis(4);
     //refineInput is called here because it is currently processing a safety measure and therefore cannot be missed.
     //In future versions, the refineInput function will be more flexible and therefore called from other areas of the code.
-    //refineInput();
+    refineInput();
 }
 
 //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
-double PilotInput::refineInput()
+void PilotInput::refineInput()
 {
     
     //frc::DigitalInput testLimitSwitch(0);

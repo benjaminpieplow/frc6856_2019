@@ -18,9 +18,7 @@ class PilotInput {
     void getController();
 
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
-    double refineInput();
-    
-
+    void refineInput();
 
     private:
     //Pilot's Joystick
