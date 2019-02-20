@@ -3,6 +3,8 @@
 
 CAMERA PROGRAMMING, INCLUDES INIT, STREAMING, AND SETTING RES
 
+TODO: This code does not use a class and therefore the constructors aren't best practice.
+This should be separated into a CameraStream.cpp and CameraStream.h
 */
 #include <iostream>
 #include <frc/WPILib.h>
@@ -42,32 +44,6 @@ void StreamBotCameras()
     //streaming camera to dashboard. Currently set for dual camera
     mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
     mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(1);
-}
-
-/*
-just ignore this method, just a little project, I am just trying to do some video processing (with as little overhead as possible)
-*/
-double checkSimularityToOrgin()
-{
-
-    /*
-    cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
-    //setting resolution
-        camera.SetResolution(640, 480);
-        //creating image (video sink)
-        cs::CvSink cvSink = frc::CameraServer::GetInstance()->GetVideo();
-        cs::CvSource outputStreamStd = frc::CameraServer::GetInstance()->PutVideo("Gray", resWidth, resHeight);
-
-        //creating image matrixes
-        cv::Mat source;
-        cv::Mat output;
-
-        while(true) {
-            cvSink.GrabFrame(source);
-            cvtColor(source, output, cv::COLOR_BGR2GRAY);
-            outputStreamStd.PutFrame(output);
-        }
-   */
 }
 
 } // namespace botVideo

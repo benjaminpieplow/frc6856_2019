@@ -8,19 +8,13 @@
 #include "DriveTeamIO.h"
 #include "GlobalVars.h"
 
+//Constructor (empty)
+PilotInput::PilotInput () {}
 
-//Initialize Global Variables
-void PilotInput::initGlobalVars() {
-}
+//Destructor (empty - like my soul)
+PilotInput::~PilotInput () {}
 
-PilotInput::PilotInput () {
-}
-
-PilotInput::~PilotInput () {
-
-}
-
-//Call to input data from controllers
+//Call to load controller joystick positions into object's properties
 void PilotInput::getController()
 {
     this->xAnalogVel = primaryJoy.GetRawAxis(0);
@@ -34,12 +28,7 @@ void PilotInput::getController()
 //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
 void PilotInput::refineInput()
 {
-    
-    //frc::DigitalInput testLimitSwitch(0);
-
-    //This is a proof-of-concept to test limit switch functionality. A pressed limit switch will disable the robot.
-    //if ( testLimitSwitch.Get()  )
-
+    //modifier is currently set to calm the robot down, get permission from Dan or Ray before exceeding 0.25
     const double modifier = 0.2;
     xRefinedVel = xAnalogVel * modifier;
     yRefinedVel = yAnalogVel * modifier;

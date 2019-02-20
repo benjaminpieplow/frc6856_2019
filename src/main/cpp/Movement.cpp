@@ -34,6 +34,11 @@ driveTrain::~driveTrain()
 
 }
 
+
+/**
+ * Uses motor anlges to calculate magnitudes for X and Y drive axis, used on each motor
+ * 2-D array has components [X/Y][MOTOR] where [1][3] would be the Y power factor for motor 3
+ */
 void driveTrain::populateMotorVectorFactors() 
 {
     for (int i = 0; i < 4; i++) {
@@ -42,7 +47,10 @@ void driveTrain::populateMotorVectorFactors()
     }
 }
 
-//Use the values set in populateMotorVectorFactors to set the required power for each motor
+/**
+ * Use the values set in populateMotorVectorFactors to set the required power for each motor
+ * Called once per robot packet
+ */
 void driveTrain::calculateDriveMotorVectors() 
 {
     for (int i = 0; i < 4; i++) {
@@ -51,7 +59,10 @@ void driveTrain::calculateDriveMotorVectors()
     }
 }
 
-//Apply the set required motor power to each drivetrain motor
+/**
+ * Apply the set required motor power to each drivetrain motor
+ * Called once per robot packet
+ */
 void driveTrain::setDriveMotorPower() {
     for (int i = 0; i < 4; i++) {
         //driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);

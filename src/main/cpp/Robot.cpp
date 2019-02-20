@@ -10,29 +10,24 @@
 #include "Camera.h"
 #include "Robot.h"
 #include "Movement.h"
-//#include "IO.cpp"
-//#include "PilotCTRL.h"
 
-
-
-
-//driveTrain primaryDrive;
-
+/**
+ * Runs at RoboRIO startup, regardless of mode
+ * m_chooser is FRC code, the rest setups variables and runtime objects
+*/
 void Robot::RobotInit() {
 
   //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
-
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
 
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
 
-  //Initialize Global Variables
-  m_pilotInput.initGlobalVars();
 
+  //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
 
 
@@ -111,9 +106,9 @@ void Robot::TestPeriodic() {
 }
 
 #ifndef RUNNING_FRC_TESTS
+
 int main()
-{
-  
+{  
   return frc::StartRobot<Robot>();
 }
 #endif

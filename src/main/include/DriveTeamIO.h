@@ -12,8 +12,6 @@ class PilotInput {
     PilotInput();
     ~PilotInput();
 
-    void initGlobalVars();
-
     //Call to input data from controllers
     void getController();
 
