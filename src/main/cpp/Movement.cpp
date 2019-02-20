@@ -67,5 +67,6 @@ void driveTrain::setDriveMotorPower() {
     for (int i = 0; i < 4; i++) {
         //driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);
         this->pDriveWheel[i]->Set(ControlMode::PercentOutput, motorPower[i]);
+  
     }
 }
