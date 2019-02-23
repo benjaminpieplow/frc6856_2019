@@ -1,0 +1,8 @@
+MOTOR MAPPINGS:
+CAN_ID  |   PURPOSE
+10      |   Front Left OMNI Drive Motor
+11      |   Rear Left OMNI Drive Motor
+12      |   Rear Right OMNI Drive Motor
+13      |   Front Right OMNI Drive Motor
+
+20      |   Mast Lift/Lower

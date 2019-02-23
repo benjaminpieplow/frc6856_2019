@@ -13,6 +13,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include "Movement.h"
 #include "DriveTeamIO.h"
+#include "MainMast.h"
 
 
 
@@ -36,4 +37,5 @@ class Robot : public frc::TimedRobot {
 
   PilotInput m_pilotInput;
   driveTrain m_primaryDrive;
+  MainMast m_mainMast;
 };

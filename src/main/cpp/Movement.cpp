@@ -10,11 +10,7 @@
 
 driveTrain::driveTrain()
 {
-    //motorPower[0] = 0.0;
-    //motorPower[1] = 0.0;
-    //motorPower[2] = 0.0;
-    //motorPower[3] = 0.0;
-    //Feeney said to do this ^ but try this v and see if it works. Once this compiles, delete either the above or below
+    //Initializes the set Motor Power at 0, to avoid any jumps
     motorPower[4] = {0.0};
     
     //Create an array of TalonSRX objects for drive wheels, these will be addressed by the motors
@@ -33,6 +29,8 @@ driveTrain::~driveTrain()
     delete pDriveWheel[3];
 
 }
+
+
 
 
 /**

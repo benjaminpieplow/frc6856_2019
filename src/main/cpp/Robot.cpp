@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Robot.h"
 #include "Movement.h"
+#include "MainMast.h"
 
 /**
  * Runs at RoboRIO startup, regardless of mode
@@ -85,6 +86,8 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit() {
   std::cout << "TeleopInit Complete";
+  m_mainMast.MastTestInit();
+  m_mainMast.MastTest(0);
 }
 
 void Robot::TeleopPeriodic() {
