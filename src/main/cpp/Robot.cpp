@@ -12,14 +12,23 @@
 #include "Movement.h"
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include <IO.h>
-#include <frc/Talon.h>
+#include "IO.h"
 #include <frc/Encoder.h>
 
+//making global Variables
+static driveTrain primaryDrive;
+//INSTANTIAING THE MOTOR ENCODERS
+//PARAMTER MEANINGS (DIGITAL INPUT, INVERT COUNT DIRECTION, ACCURACY)
+static frc::Encoder frontLeftEncoder(0, false, frc::Encoder::EncodingType::k4X);
+static frc::Encoder frontRightEncoder(3, false, frc::Encoder::EncodingType::k4X);
+static frc::Encoder backleftEncoder(1, false, frc::Encoder::EncodingType::k4X);
+static frc::Encoder backRightEncoder(2, false, frc::Encoder::EncodingType::k4X);
 
-driveTrain primaryDrive;
+void Robot::RobotInit()
+{
 
-void Robot::RobotInit() {
+  //INSTANTIATING THE DRIVETRAIN CLASS
+
   //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
@@ -27,12 +36,10 @@ void Robot::RobotInit() {
   //Calculate motor vector factors
   primaryDrive.populateMotorVectorFactors();
 
+  //streaming cameras
   botVideo::StreamBotCameras();
-  TalonSRX testMotor {0};
-  
-  //DEFINING THE MOTOR ENCODERS ENUMS
-  ctre::phoenix::motorcontrol::CTRE_MagEncoder_Absolute frontLeft{0, 0};
 
+  
 }
 
 /**
@@ -85,17 +92,19 @@ void Robot::AutonomousPeriodic()
   }
 }
 
-void Robot::TeleopInit() {
+void Robot::TeleopInit()
+{
 }
 
-void Robot::TeleopPeriodic() {
-  
+void Robot::TeleopPeriodic()
+{
+
   //Define pilotInput and Drivetrain as object-ish things
   CTRLInput pilotInput;
-  
+
   //Get Pilot's input data
   pilotInput.getController();
-  
+
   //Run input refinement (dampen, bellcurve, etc)
   pilotInput.refineInput();
 
@@ -106,7 +115,8 @@ void Robot::TeleopPeriodic() {
   primaryDrive.setDriveMotorPower();
 }
 
-void Robot::TestPeriodic() {
+void Robot::TestPeriodic()
+{
 }
 
 #ifndef RUNNING_FRC_TESTS

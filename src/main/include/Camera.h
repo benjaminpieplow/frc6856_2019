@@ -50,8 +50,6 @@ just ignore this method, just a little project, I am just trying to do some vide
 */
 double checkSimularityToOrgin()
 {
-
-    /*
     cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture();
     //setting resolution
         camera.SetResolution(640, 480);
@@ -68,7 +66,6 @@ double checkSimularityToOrgin()
             cvtColor(source, output, cv::COLOR_BGR2GRAY);
             outputStreamStd.PutFrame(output);
         }
-   */
 }
 
 } // namespace botVideo

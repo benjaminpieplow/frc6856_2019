@@ -1,15 +1,20 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <frc/Talon.h>
 #include "rotaryEncoderIO.h"
 
-class motorIO {
+class driveMotorIO {
 
 public:
 
-/*
-method to check rotation and return it in radians
-*/
-double checkTalonRotation ();
+//CHECKS THE THE AMOUNT OF ROTATIONS since reset 
+long long checkMotorRotations();
+
+//SETS THE COUNT TO ZERO ON ALL ENCODERS
+void resetTickerAll();
+
+//Sets the passed encoder's count to zero
+void resetTicker(frc::Encoder encoder);
+
+//sets the distance per square pulse
+void setDistancePerPulse(frc::Encoder encoder, double distance);
+};
