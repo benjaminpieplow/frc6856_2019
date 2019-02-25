@@ -11,6 +11,8 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/DoubleSolenoid.h>
+#include <frc/Solenoid.h>
 #include "Movement.h"
 #include "DriveTeamIO.h"
 

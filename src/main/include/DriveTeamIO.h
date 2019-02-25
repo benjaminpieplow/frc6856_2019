@@ -18,14 +18,34 @@ class PilotInput {
     //Refine Input. Current use: Dampen power. Future use: convert to meters/second, "shift gears", tune sensitivities etc.
     void refineInput();
 
+    //Get a button state, currently for test
+    bool getButton();
+
     private:
-    //Pilot's Joystick
-    frc::Joystick primaryJoy{0};
+    //Pilot's Controller
+    frc::XboxController primaryJoy{0};
 
     //Raw Values from Joystick (-1 to 1, 0 at rest)
     double xAnalogVel = 0;
     double yAnalogVel = 0;
     double zAnalogRot = 0;
 
-
 };
+
+class OperatorInput
+{
+    public:
+    OperatorInput();
+    ~OperatorInput();
+
+    double getJoyX();
+
+    double getJoyY();
+
+    bool getJoyTrigger();
+
+    private:
+    //Operator's Joystick
+    frc::Joystick operatorJoy{1};
+
+}

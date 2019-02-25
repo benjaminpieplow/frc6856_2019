@@ -35,4 +35,28 @@ void PilotInput::refineInput()
     zRefinedRot = zAnalogRot * modifier;
 }
 
+bool PilotInput::getButton()
+{
+    return primaryJoy.GetRawButton(5);
+}
 
+
+double OperatorInput::getJoyX()
+{
+    return operatorJoy.GetRawAxis(1);
+}
+
+double OperatorInput::getJoyY()
+{
+    return operatorJoy.GetRawAxis(0);
+}
+
+double OperatorInput::getJoyY()
+{
+    return operatorJoy.GetRawAxis(1);   
+}
+
+bool OperatorInput::getJoyTrigger()
+{
+    return operatorJoy.GetTrigger();
+}

@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include <iostream>
+#include <frc/DoubleSolenoid.h>
+#include <frc/Solenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Camera.h"
 #include "Robot.h"
@@ -29,8 +31,6 @@ void Robot::RobotInit() {
 
   //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
-
-
 }
 
 /**
@@ -89,9 +89,6 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   
-  //Define pilotInput and Drivetrain as object-ish things
-  //PilotInput pilotInput;
-  
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
 
@@ -100,6 +97,7 @@ void Robot::TeleopPeriodic() {
 
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
+  
 }
 
 void Robot::TestPeriodic() {
