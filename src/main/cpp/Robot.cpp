@@ -30,8 +30,6 @@ void Robot::RobotInit() {
 
   //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
-
-
 }
 
 /**
@@ -87,7 +85,7 @@ void Robot::AutonomousPeriodic()
 void Robot::TeleopInit() {
   std::cout << "TeleopInit Complete";
   m_mainMast.MastTestInit();
-  m_mainMast.MastTest(0);
+  m_mainMast.MastTest(10);
 }
 
 void Robot::TeleopPeriodic() {

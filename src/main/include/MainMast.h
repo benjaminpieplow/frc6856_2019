@@ -18,9 +18,8 @@ class MainMast
 
     void MastTestInit();
 
-    void MastTest(int targetPos);
+    void MastTest(double targetPos);
 
-    //
 
     private:
 

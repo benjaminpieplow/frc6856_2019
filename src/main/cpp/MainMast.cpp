@@ -30,6 +30,7 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->SetSelectedSensorPosition(0, kPIDLoopIdx, kTimeoutMs);
     this->m_pMainMastMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::QuadEncoder, kPIDLoopIdx, kTimeoutMs);
     this->m_pMainMastMotor->SetSensorPhase(true);
+    this->m_pMainMastMotor->SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
 
     this->m_pMainMastMotor->ConfigNominalOutputForward(0, kTimeoutMs);
     this->m_pMainMastMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
@@ -37,14 +38,15 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->ConfigPeakOutputReverse(0.25, kTimeoutMs);
 
     this->m_pMainMastMotor->Config_kP(0, 100);
-    this->m_pMainMastMotor->Config_kI(0, 0.1);
+    this->m_pMainMastMotor->Config_kI(0, 0.5);
     this->m_pMainMastMotor->Config_kD(0, 0.0);
-    this->m_pMainMastMotor->ConfigAllowableClosedloopError(0, 10, kTimeoutMs);
+    //this->m_pMainMastMotor->ConfigAllowableClosedloopError(0, 10, kTimeoutMs);
 
     this->m_pMainMastMotor->ConfigNeutralDeadband(0, kTimeoutMs);
 }
 
-void MainMast::MastTest(int targetPos)
+void MainMast::MastTest(double targetPos)
 {
     this->m_pMainMastMotor->Set(ControlMode::Position, targetPos);
 }
+
