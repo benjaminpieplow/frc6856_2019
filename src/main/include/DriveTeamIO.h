@@ -48,4 +48,4 @@ class OperatorInput
     //Operator's Joystick
     frc::Joystick operatorJoy{1};
 
-}
+};

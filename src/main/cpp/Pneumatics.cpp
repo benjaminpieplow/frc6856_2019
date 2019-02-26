@@ -3,21 +3,40 @@
 
 PneumaticActuator::PneumaticActuator()
 {
-    //Construct PneumaticActuator
+  this->solenoid.Set(frc::DoubleSolenoid::kForward);
 }
 
 
-
-void PneumaticActuator::togglePneumaticActuator()
+PneumaticActuator::~PneumaticActuator()
 {
-  if (this->solenoid.Get() == frc::DoubleSolenoid::kForward)
+  //Meh
+}
+
+
+void PneumaticActuator::togglePneumaticActuator(bool trigger)
+{
+  //If the trigger is pulled AND a switch has not already happened this trigger-pull
+  if (trigger && this->hasChanged)
   {
-    this->solenoid.Set(frc::DoubleSolenoid::kReverse);
+    //Reverse the actuator
+    if (this->solenoid.Get() == frc::DoubleSolenoid::kForward)
+    {
+      this->solenoid.Set(frc::DoubleSolenoid::kReverse);
+    }
+    else
+    {
+      this->solenoid.Set(frc::DoubleSolenoid::kForward);
+    }
+    //Disables this IF statement until the trigger is released (prevents cycling the cylinder when trigger is held for >10ms)
+    this->hasChanged = false;
   }
-  else
+
+  //If the trigger is not being pulled, re-enable the toggle
+  if (!trigger && !this->hasChanged)
   {
-    this->solenoid.Set(frc::DoubleSolenoid::kForward);
+    this->hasChanged = true;
   }
+
 }
 
 /**

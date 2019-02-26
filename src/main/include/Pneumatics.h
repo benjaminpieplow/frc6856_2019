@@ -13,11 +13,13 @@ class PneumaticActuator
     PneumaticActuator();
     ~PneumaticActuator();
 
-    //Switch the Actuator
-    void togglePneumaticActuator();
+    //Switch the Actuator, will only work on the "rising edge" of the trigger pull
+    void togglePneumaticActuator(bool trigger);
 
 
     private:
     frc::DoubleSolenoid solenoid {4,5};
-    bool lastState = false;
+
+    //Keep track of current trigger changes
+    bool hasChanged = true;
 };

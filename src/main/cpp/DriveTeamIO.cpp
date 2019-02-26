@@ -40,6 +40,15 @@ bool PilotInput::getButton()
     return primaryJoy.GetRawButton(5);
 }
 
+OperatorInput::OperatorInput()
+{
+    //Still nothing!
+}
+
+OperatorInput::~OperatorInput()
+{
+    //Should probably do this, shouldn't I?
+}
 
 double OperatorInput::getJoyX()
 {
@@ -49,11 +58,6 @@ double OperatorInput::getJoyX()
 double OperatorInput::getJoyY()
 {
     return operatorJoy.GetRawAxis(0);
-}
-
-double OperatorInput::getJoyY()
-{
-    return operatorJoy.GetRawAxis(1);   
 }
 
 bool OperatorInput::getJoyTrigger()

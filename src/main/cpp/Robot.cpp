@@ -6,12 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include <iostream>
-#include <frc/DoubleSolenoid.h>
-#include <frc/Solenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Camera.h"
 #include "Robot.h"
 #include "Movement.h"
+//#include "MainMast.h"
 
 /**
  * Runs at RoboRIO startup, regardless of mode
@@ -31,6 +30,7 @@ void Robot::RobotInit() {
 
   //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
+
 }
 
 /**
@@ -85,9 +85,14 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit() {
   std::cout << "TeleopInit Complete";
+  //m_mainMast.MastTestInit();
+  //m_mainMast.MastTest(0);
 }
 
 void Robot::TeleopPeriodic() {
+  
+  //Define pilotInput and Drivetrain as object-ish things
+  //PilotInput pilotInput;
   
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
@@ -97,7 +102,9 @@ void Robot::TeleopPeriodic() {
 
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
-  
+
+  //Test Solenoid Actuator
+  testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
 }
 
 void Robot::TestPeriodic() {
