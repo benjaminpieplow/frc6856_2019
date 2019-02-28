@@ -18,13 +18,10 @@ class MainMast
 
     void MastTestInit();
 
-    void MastTest(double targetPos);
+    void MastTest(double targotPos);
 
 
     private:
-
-    
-
     //Mast Motor Controller
     TalonSRX* m_pMainMastMotor;
 

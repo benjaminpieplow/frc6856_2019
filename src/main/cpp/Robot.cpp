@@ -85,7 +85,6 @@ void Robot::AutonomousPeriodic()
 void Robot::TeleopInit() {
   std::cout << "TeleopInit Complete";
   m_mainMast.MastTestInit();
-  m_mainMast.MastTest(10);
 }
 
 void Robot::TeleopPeriodic() {
@@ -101,6 +100,8 @@ void Robot::TeleopPeriodic() {
 
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
+
+  m_mainMast.MastTest(10);
 }
 
 void Robot::TestPeriodic() {
