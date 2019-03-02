@@ -11,8 +11,11 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/DoubleSolenoid.h>
+#include <frc/Solenoid.h>
 #include "Movement.h"
 #include "DriveTeamIO.h"
+#include "Pneumatics.h"
 
 
 
@@ -34,6 +37,13 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
 
+  //Create IO
   PilotInput m_pilotInput;
+  OperatorInput m_operatorInput;
+
+  //Create Drivetrain
   driveTrain m_primaryDrive;
+
+  //Create Testing Pneumatic Cylinder
+  PneumaticActuator testSolenoid;
 };
