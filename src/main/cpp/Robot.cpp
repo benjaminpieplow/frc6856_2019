@@ -84,7 +84,7 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit() {
   std::cout << "TeleopInit Complete";
-  m_mainMast.MastTestInit();
+  //m_mainMast.MastTestInit();
 }
 
 void Robot::TeleopPeriodic() {
@@ -102,6 +102,8 @@ void Robot::TeleopPeriodic() {
   m_primaryDrive.setDriveMotorPower();
 
   m_mainMast.MastTest(10);
+  //Toggle Pneumatic Actuator by passing input from Operator Joystick
+  testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
 }
 
 void Robot::TestPeriodic() {
