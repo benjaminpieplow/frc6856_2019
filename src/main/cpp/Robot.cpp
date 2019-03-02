@@ -103,7 +103,7 @@ void Robot::TeleopPeriodic() {
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
-  //Test Solenoid Actuator
+  //Toggle Pneumatic Actuator by passing input from Operator Joystick
   testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
 }
 

@@ -50,16 +50,28 @@ OperatorInput::~OperatorInput()
     //Should probably do this, shouldn't I?
 }
 
+
+/**
+ * Returns the Joystick X axis
+ * Currently Used for testing Power Control
+ */
 double OperatorInput::getJoyX()
 {
     return operatorJoy.GetRawAxis(1);
 }
 
+/**
+ * Returns Joystick Y Axis
+*/
 double OperatorInput::getJoyY()
 {
     return operatorJoy.GetRawAxis(0);
 }
 
+/**
+ * Returns Trigger Position
+ * Currently used for Pneumatic Actuator
+ */
 bool OperatorInput::getJoyTrigger()
 {
     return operatorJoy.GetTrigger();

@@ -32,16 +32,24 @@ class PilotInput {
 
 };
 
+
+/**
+ * OperatorInput is designed to pull data from a joystick controlled by the operator
+ * Currently used for all non-driving functions: Pneumatic and Motor control
+ */
 class OperatorInput
 {
     public:
     OperatorInput();
     ~OperatorInput();
 
+    //Returns Joystick X Axis
     double getJoyX();
 
+    //Returns Joystick Y Axis
     double getJoyY();
 
+    //Returns Joystick Trigger
     bool getJoyTrigger();
 
     private:
