@@ -6,3 +6,9 @@ CAN_ID  |   PURPOSE
 13      |   Front Right OMNI Drive Motor
 
 20      |   Mast Lift/Lower
+
+DIO MAPPINGS
+PIN_ID  |   PURPOSE
+0       |   Bottom-Out (homing?) Limit Switch
+1       |   Top-Out Limit Switch
+2       |   Position 1 Limit Switch

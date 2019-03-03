@@ -9,18 +9,36 @@
 MainMast::MainMast()
 {
     //Initialize the Motor Controller (Note: MUST be a TalonSRX as it uses an encoder)
-    this->m_pMainMastMotor = new TalonSRX(20);
+    this->m_pMainMastMotor = new TalonSRX(4);
 
-    //Initialize the "Bottom" homing switch
-    this->m_pLimitSwitchLower = new frc::DigitalInput(0);
-    //Initialize the "Top" homing switch
-    this->m_pLimitSwitchUpper = new frc::DigitalInput(1);
+    //Initialize an Array of DigitalInputs
+    for (int i = 0; i < 10; i++)
+    {
+        this->m_pLimitSwitchObjects[i] = new frc::DigitalInput(i);
+    }
+
 }
 
 MainMast::~MainMast() {}
 
-void MainMast::MastHome() {}
+/**
+ * Eventually, this function will drop the mast to the bottom limit switch at low power, then raise the mast to the bottom-most "running" position
+ * It could also trip if a limit switch is hit unexpectedly
+ */
+void MainMast::MastHome()
+{
+    if (this->m_pLimitSwitchState[0]) {}
+}
 
+void MainMast::MainMastInit()
+{
+    //Enable Active Braking on the mast motor (reduces coasting)
+    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+}
+
+/**
+ * You should probably deprecate this...
+ */
 void MainMast::MastTestInit()
 {
     //Get Absolute sensor position, disregarding "turnovers"
@@ -47,6 +65,10 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->ConfigNeutralDeadband(0, kTimeoutMs);
 }
 
+/**
+ * Experimental: Use the Talon's Position Hold feature
+ * Status: FAIL
+ */
 void MainMast::MastTest(double targetPos)
 {
     this->m_pMainMastMotor->Set(ControlMode::Position, targetPos);
@@ -54,4 +76,41 @@ void MainMast::MastTest(double targetPos)
 
     //Set the talon to hold
     //this->m_pMainMastMotor->Set(ControlMode::MotionProfile, );
+}
+
+/**
+ * A testing method to control output power to the MainMast Motor based on operator joystick input (or any double you pass it)
+ */
+void MainMast::MastManualControl(double targetPower)
+{
+    if (this->m_pLimitSwitchState[2]) {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+    }
+    else
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
+    }
+}
+
+/**
+ * Returns TRUE when the BOTTOM limit switch is pressed
+*/
+
+/**
+ * Cycles through all limit switches and puts their states into an array
+ */
+void MainMast::updateLimitSwitches()
+{
+    for (int i = 0; i < 9; i++)
+    {
+        this->m_pLimitSwitchState[i] = this->m_pLimitSwitchObjects[i]->Get();
+    }
+}
+
+/**
+ * For getting independant limit switches outside of the MainMast object
+ */
+bool MainMast::getLimitSwitch(int limIndex)
+{
+    return this->m_pLimitSwitchState[limIndex];
 }

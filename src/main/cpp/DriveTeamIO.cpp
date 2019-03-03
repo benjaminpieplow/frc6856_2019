@@ -29,7 +29,7 @@ void PilotInput::getController()
 void PilotInput::refineInput()
 {
     //modifier is currently set to calm the robot down, get permission from Dan or Ray before exceeding 0.25
-    const double modifier = 0.2;
+    const double modifier = 0.3;
     xRefinedVel = xAnalogVel * modifier;
     yRefinedVel = yAnalogVel * modifier;
     zRefinedRot = zAnalogRot * modifier;
@@ -57,7 +57,7 @@ OperatorInput::~OperatorInput()
  */
 double OperatorInput::getJoyX()
 {
-    return operatorJoy.GetRawAxis(1);
+    return operatorJoy.GetRawAxis(0);
 }
 
 /**
@@ -65,7 +65,7 @@ double OperatorInput::getJoyX()
 */
 double OperatorInput::getJoyY()
 {
-    return operatorJoy.GetRawAxis(0);
+    return operatorJoy.GetRawAxis(1);
 }
 
 /**

@@ -84,14 +84,15 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit() {
   std::cout << "TeleopInit Complete";
+  m_mainMast.MainMastInit();
   //m_mainMast.MastTestInit();
 }
 
-void Robot::TeleopPeriodic() {
-  
-  //Define pilotInput and Drivetrain as object-ish things
-  //PilotInput pilotInput;
-  
+void Robot::TeleopPeriodic()
+{
+  //Get latest Limit Switch data
+  m_mainMast.updateLimitSwitches();
+
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
 
@@ -101,9 +102,19 @@ void Robot::TeleopPeriodic() {
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
-  m_mainMast.MastTest(10);
   //Toggle Pneumatic Actuator by passing input from Operator Joystick
   testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
+
+  //Set Main Mast Power
+  m_mainMast.MastManualControl(m_operatorInput.getJoyY());
+  if (!m_mainMast.getLimitSwitch(2))
+  {
+    testSolenoid.setPneumaticActuator(true);
+  }
+  else
+  {
+    testSolenoid.setPneumaticActuator(false);
+  }
 }
 
 void Robot::TestPeriodic() {
