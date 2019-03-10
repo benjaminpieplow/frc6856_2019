@@ -13,7 +13,7 @@ void resetTicker(frc::Encoder encoder) {
 }
 
 void setDistancePerPulse(frc::Encoder encoder, double distance) {
-    encoder.SetDistancePerPulse(distance)
+    encoder.SetDistancePerPulse(distance);
 }
 
 void setAllDistancePerPulse(double distance) {
@@ -25,4 +25,8 @@ void setAllDistancePerPulse(double distance) {
 
 long long checkMotorRotations(frc::Encoder encoder) {
     encoder.GetDistance();
+}
+
+double getPulses (frc::Encoder encoder) {
+    
 }

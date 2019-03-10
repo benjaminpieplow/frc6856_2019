@@ -39,7 +39,12 @@ void Robot::RobotInit()
   //streaming cameras
   botVideo::StreamBotCameras();
 
-  
+  //Instantiating drivetrain motor class
+  driveMotorIO driveEncoders();
+  //******VERY IMPORTANT HERE******* || THIS SETS THE DISTANCE PER PULSE ON THE SQUARE WAVE FREQUNCIES FOR THE ENCODERS
+  //The next Line sets every time 24 'clicks' or degrees pass, the encoder send a pulse
+  driveEncoders().setAllDistancePerPulse(24);
+
 }
 
 /**
