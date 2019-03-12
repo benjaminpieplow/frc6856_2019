@@ -17,8 +17,8 @@ PilotInput::~PilotInput () {}
 //Call to load controller joystick positions into object's properties
 void PilotInput::getController()
 {
-    this->xAnalogVel = primaryJoy.GetRawAxis(0);
-    this->yAnalogVel = primaryJoy.GetRawAxis(1);
+    this->xAnalogVel = primaryJoy.GetRawAxis(0) * -1;
+    this->yAnalogVel = primaryJoy.GetRawAxis(1) * -1;
     this->zAnalogRot = primaryJoy.GetRawAxis(4);
     //refineInput is called here because it is currently processing a safety measure and therefore cannot be missed.
     //In future versions, the refineInput function will be more flexible and therefore called from other areas of the code.

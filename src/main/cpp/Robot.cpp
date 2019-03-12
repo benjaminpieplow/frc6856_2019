@@ -23,13 +23,14 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
 
-
   //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
+
+  m_mainMast.nukeControllers();
+  
 }
 
 /**
@@ -83,9 +84,8 @@ void Robot::AutonomousPeriodic()
 }
 
 void Robot::TeleopInit() {
-  std::cout << "TeleopInit Complete";
-  m_mainMast.MainMastInit();
   //m_mainMast.MastTestInit();
+  std::cout << "TeleopInit Complete";
 }
 
 void Robot::TeleopPeriodic()
@@ -107,6 +107,10 @@ void Robot::TeleopPeriodic()
 
   //Set Main Mast Power
   m_mainMast.MastManualControl(m_operatorInput.getJoyY());
+  //double targetPos;
+  //targetPos = m_operatorInput.getJoyY() * 360 * 1.0;
+  //m_mainMast.MastTest(targetPos);
+
   if (!m_mainMast.getLimitSwitch(2))
   {
     testSolenoid.setPneumaticActuator(true);
@@ -118,6 +122,7 @@ void Robot::TeleopPeriodic()
 }
 
 void Robot::TestPeriodic() {
+  
 }
 
 #ifndef RUNNING_FRC_TESTS
