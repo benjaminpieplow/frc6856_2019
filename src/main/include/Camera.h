@@ -17,13 +17,10 @@ This should be separated into a CameraStream.cpp and CameraStream.h
 //INITITATES / CONNECTS THE CAMERAS TO THE RIO, IF NO VALUES ARE SPECIFIED, DEFUALT CONSTRUCOTR WILL BE USED
 
 // namespace botVideo
-namespace botVideo
-{
+
 //STREAMS THE CAMERA(S) TO THE DRIVER STATION
-void StreamBotCameras(int resWidth, int resHeight, int fps)
+void StreamBotCameras(int resWidth, int resHeight, int fps, cs::UsbCamera mainCamera)
 {
-   //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
-    cs::UsbCamera mainCamera {"frontCamera", 0};
     //setting res
     mainCamera.SetResolution(resWidth, resHeight);
     //setting fps
@@ -33,10 +30,8 @@ void StreamBotCameras(int resWidth, int resHeight, int fps)
 }
 
 //SECOND CONSTRUCTOR | USES DEFAULT VALUES
-void StreamBotCameras()
+void StreamBotCameras(cs::UsbCamera mainCamera)
 {
-    //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
-    cs::UsbCamera mainCamera {"frontCamera", 0};
     //setting res
     mainCamera.SetResolution(640, 480);
     //setting fps
@@ -46,4 +41,13 @@ void StreamBotCameras()
     mainCamera = frc::CameraServer::GetInstance()->StartAutomaticCapture(1);
 }
 
-} // namespace botVideo
+/*
+----------------THIS NEXT SECTION IS FOR VIDEO PROCESSING-------------
+*/
+
+//INITIALIZE THE FRAME RECOGINTION
+
+//
+int InitVidProc();
+//Checks the simularity between two frames
+float checkFrameSim();

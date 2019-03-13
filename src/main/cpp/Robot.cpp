@@ -29,7 +29,10 @@ void Robot::RobotInit() {
 
 
   //Start Streaming both cameras using default settings
-  botVideo::StreamBotCameras();
+
+  //instantiaing CS_Core USB camera | MAKE SURE THIS CAMERA IS PLUGGED INTO THE FIRST PORT!
+  cs::UsbCamera mainCamera {"frontCamera", 0};
+  StreamBotCameras(mainCamera);
 }
 
 /**
