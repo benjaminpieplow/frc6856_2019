@@ -6,3 +6,6 @@
 double xRefinedVel = 0;
 double yRefinedVel = 0;
 double zRefinedRot = 0;
+
+//Limit Switches must be accessible by all classes
+bool limSwitchStateArr[10];

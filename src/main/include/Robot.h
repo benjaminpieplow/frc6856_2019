@@ -17,6 +17,7 @@
 #include "DriveTeamIO.h"
 #include "MainMast.h"
 #include "Pneumatics.h"
+#include "RobotIO.h"
 
 
 
@@ -29,7 +30,6 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
-
   
 
  private:
@@ -39,6 +39,7 @@ class Robot : public frc::TimedRobot {
   std::string m_autoSelected;
 
   //Create IO
+  LimitSwitchControl m_limitSwitch;
   PilotInput m_pilotInput;
   OperatorInput m_operatorInput;
 
@@ -50,4 +51,5 @@ class Robot : public frc::TimedRobot {
 
   //Create Testing Pneumatic Cylinder
   PneumaticActuator testSolenoid;
+
 };

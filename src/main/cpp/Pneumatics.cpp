@@ -39,20 +39,6 @@ void PneumaticActuator::togglePneumaticActuator(bool trigger)
 
 }
 
-
-
-/**
- * 
-  if (m_pilotInput.getButton()) {
-    testDoubleSolenoid.Set(frc::DoubleSolenoid::Value::kForward);
-  }
-  else
-  {
-    testDoubleSolenoid.Set(frc::DoubleSolenoid::Value::kReverse);
-  }
- */
-
-
 void PneumaticActuator::setPneumaticActuator(bool forwards)
 {
   if (forwards)

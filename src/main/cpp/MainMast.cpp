@@ -17,23 +17,19 @@ MainMast::MainMast()
     //Enable Active Braking on the mast motor (reduces coasting)
     this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 
-    //Initialize an Array of DigitalInputs
-    for (int i = 0; i < 10; i++)
-    {
-        this->m_pLimitSwitchObjects[i] = new frc::DigitalInput(i);
-    }
 
 }
 
 MainMast::~MainMast() {}
 
 /**
- * Eventually, this function will drop the mast to the bottom limit switch at low power, then raise the mast to the bottom-most "running" position
+ * Eventually, this function will drop the mast to the bottom limit switch at low power,
+ * then raise the mast to the bottom-most "running" position
  * It could also trip if a limit switch is hit unexpectedly
  */
 void MainMast::MastHome()
 {
-    if (this->m_pLimitSwitchState[0]) {}
+    if (limSwitchStateArr[0]) {}
 }
 
 void MainMast::MainMastInit()
@@ -72,42 +68,48 @@ void MainMast::MastTestInit()
    
     //this->m_pMainMastMotor->ConfigFactoryDefault();
     
-    /* Zero the sensor */
-    this->m_pMainMastMotor->SetSelectedSensorPosition(0, 0, 10);
-
-    this->m_pMainMastMotor->Set(ControlMode::MotionMagic, 0);
-
+    //Configure the Sensor
     this->m_pMainMastMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::QuadEncoder, 0, 10);
 
+    /* Zero the sensor */
+    this->m_pMainMastMotor->SetSelectedSensorPosition(0, 0, 10);
     this->m_pMainMastMotor->SetSensorPhase(true);
     this->m_pMainMastMotor->SetInverted(false);
+
+
+    //Set the control mode to Motion Magic. Passing Position 0 should neutralize the PID controller,
+    //but kF (Feed Forward) will jump this and could cause an oscilation at LIMIT.
+    //Instead, a homing function should be called
+    this->m_pMainMastMotor->Set(ControlMode::MotionMagic, 0);
+
+    //Pretty sure this syncs the Talon's update rate to the RIO's - some smart guy on YouTube said to do it
     this->m_pMainMastMotor->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);
     this->m_pMainMastMotor->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic, 10, 10);
 
+    //Configure Nominal/Peak Power. (Hint: Use "Peak" to clamp PID's power for testing)
     this->m_pMainMastMotor->ConfigNominalOutputForward(0, 10);
     this->m_pMainMastMotor->ConfigNominalOutputReverse(0, 10);
     this->m_pMainMastMotor->ConfigPeakOutputForward(1, 10);
     this->m_pMainMastMotor->ConfigPeakOutputReverse(-1, 10);
 
-    
+    //Set PIDs - these are important
     this->m_pMainMastMotor->SelectProfileSlot(0, 0);
     this->m_pMainMastMotor->Config_kF(0, 0.0, 10);
     this->m_pMainMastMotor->Config_kP(0, 2.0, 10);
     this->m_pMainMastMotor->Config_kI(0, 0.01, 10);
     this->m_pMainMastMotor->Config_kD(0, 0.0, 10);
-
     //this->m_pMainMastMotor->Config_IntegralZone(0, 20, 10);
     this->m_pMainMastMotor->ConfigMaxIntegralAccumulator(0, 100, 10);
 
+    //Max Travel Velocity of Motion Profile in counts per 100ms
     this->m_pMainMastMotor->ConfigMotionCruiseVelocity(150, 10);
+    //Max Acceleration of Motion Profile in counts per 100ms per second
     this->m_pMainMastMotor->ConfigMotionAcceleration(150, 10);
-
-
-
 }
 
 /**
  * Experimental: Use the Talon's Position Hold feature
+ * Pass a desired sensor position in encoder counts
  * Status: EXPERIMENTAL
  */
 void MainMast::MastTest(double targetPos)
@@ -116,11 +118,12 @@ void MainMast::MastTest(double targetPos)
 }
 
 /**
- * A testing method to control output power to the MainMast Motor based on operator joystick input (or any double you pass it)
+ * A testing method to control output power to the MainMast Motor based on operator joystick input
+ * (or any double you pass it, takes values form -1 to 1)
  */
 void MainMast::MastManualControl(double targetPower)
 {
-    if (this->m_pLimitSwitchState[2]) {
+    if (limSwitchStateArr[0]) {
         this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
     }
     else
@@ -129,27 +132,14 @@ void MainMast::MastManualControl(double targetPower)
     }
 }
 
-/**
- * Cycles through all limit switches and puts their states into an array
- */
-void MainMast::updateLimitSwitches()
-{
-    for (int i = 0; i < 9; i++)
-    {
-        this->m_pLimitSwitchState[i] = this->m_pLimitSwitchObjects[i]->Get();
-    }
-}
 
+/**
+ * Resets controllers to factory defaults - There's something in the manual about factory defaults 
+ * only taking effect after rebooting a controller? Not sure, [Citation Required]
+ */
 void MainMast::nukeControllers()
 {
     this->m_pMainMastMotor->ConfigFactoryDefault();
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
 }
 
-/**
- * For getting independant limit switches outside of the MainMast object
- */
-bool MainMast::getLimitSwitch(int limIndex)
-{
-    return this->m_pLimitSwitchState[limIndex];
-}

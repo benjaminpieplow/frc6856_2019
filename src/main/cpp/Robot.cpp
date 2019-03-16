@@ -91,7 +91,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic()
 {
   //Get latest Limit Switch data
-  m_mainMast.updateLimitSwitches();
+  m_limitSwitch.updateLimitSwitches();
 
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
@@ -111,7 +111,7 @@ void Robot::TeleopPeriodic()
   //targetPos = m_operatorInput.getJoyY() * 360 * 1.0;
   //m_mainMast.MastTest(targetPos);
 
-  if (!m_mainMast.getLimitSwitch(2))
+  if (limSwitchStateArr[0])
   {
     testSolenoid.setPneumaticActuator(true);
   }
