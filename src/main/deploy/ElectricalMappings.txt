@@ -12,3 +12,5 @@ PIN_ID  |   PURPOSE
 0       |   Bottom-Out (homing?) Limit Switch
 1       |   Top-Out Limit Switch
 2       |   Position 1 Limit Switch
+3       |   Position 2 Limit Switch
+4       |   Position 3 Limit Switch

@@ -16,8 +16,6 @@ MainMast::MainMast()
     this->m_pMainMastMotorSlave->Set(ControlMode::Follower, 4);
     //Enable Active Braking on the mast motor (reduces coasting)
     this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
-
-
 }
 
 MainMast::~MainMast() {}
@@ -29,7 +27,9 @@ MainMast::~MainMast() {}
  */
 void MainMast::MastHome()
 {
-    if (limSwitchStateArr[0]) {}
+    if (limSwitchStateArr[0])
+    {
+    }
 }
 
 void MainMast::MainMastInit()
@@ -65,9 +65,9 @@ void MainMast::MastTestInit()
 
     this->m_pMainMastMotor->ConfigNeutralDeadband(0, kTimeoutMs);
     */
-   
+
     //this->m_pMainMastMotor->ConfigFactoryDefault();
-    
+
     //Configure the Sensor
     this->m_pMainMastMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::QuadEncoder, 0, 10);
 
@@ -75,7 +75,6 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->SetSelectedSensorPosition(0, 0, 10);
     this->m_pMainMastMotor->SetSensorPhase(true);
     this->m_pMainMastMotor->SetInverted(false);
-
 
     //Set the control mode to Motion Magic. Passing Position 0 should neutralize the PID controller,
     //but kF (Feed Forward) will jump this and could cause an oscilation at LIMIT.
@@ -123,7 +122,8 @@ void MainMast::MastTest(double targetPos)
  */
 void MainMast::MastManualControl(double targetPower)
 {
-    if (!limSwitchStateArr[0]) {
+    if (!limSwitchStateArr[0])
+    {
         this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
     }
     else
@@ -131,7 +131,6 @@ void MainMast::MastManualControl(double targetPower)
         this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
     }
 }
-
 
 /**
  * Resets controllers to factory defaults - There's something in the manual about factory defaults 
@@ -143,3 +142,36 @@ void MainMast::nukeControllers()
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
 }
 
+//CHECKS THE FLIGHT STAGE VARIABLE AND REACTS
+/**
+     * Track which stage of a mast flight maneuver the robot is in
+     * 0 = HALT/E-STOP (motor coast/rest, brake off)
+     * 1 = HOLD (motor coast, brake on)
+     * 2 = CRUISE (motor 100% up, brake on)
+     * 3 = FLYOVER (target limit switch is pressed but motor is not disabled)
+     * 4 = APPROACH (target limit has been released, motor power is reversed and reduced)
+     * 5 = LOCK (On target, set state 1)
+     * 6 = FLYUNDER (overshot target, motor )
+     */
+void MainMast::flightStage(int stage)
+{
+    //this switch checks what action needs to be done
+    switch (stage)
+    {
+    case 0:
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0.0);
+        break;
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    }
+}
