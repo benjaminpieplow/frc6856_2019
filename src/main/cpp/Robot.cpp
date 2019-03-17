@@ -11,6 +11,7 @@
 #include "Robot.h"
 #include "Movement.h"
 #include "MainMast.h"
+#include "GyroMove.h"
 
 /**
  * Runs at RoboRIO startup, regardless of mode
@@ -26,6 +27,7 @@ void Robot::RobotInit() {
 
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
+  
 
 
   //Start Streaming both cameras using default settings
