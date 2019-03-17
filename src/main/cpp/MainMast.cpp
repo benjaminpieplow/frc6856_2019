@@ -5,6 +5,7 @@
 
 #include "MainMast.h"
 #include "MainMastConst.h"
+#include "GlobalVars.h"
 
 MainMast::MainMast()
 {

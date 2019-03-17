@@ -36,7 +36,7 @@ void Robot::RobotInit() {
 /**
  * This function is called every robot packet, no matter the mode. Use
  * this for items like diagnostics that you want ran during disabled,
- * autonomous, teleoperated and test.
+ * autonomous, teleoperated and test.f
  *
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
@@ -91,9 +91,6 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic()
 {
-  //Get latest Limit Switch data
-  m_mainMast.updateLimitSwitches();
-
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
 
@@ -105,17 +102,6 @@ void Robot::TeleopPeriodic()
 
   //Toggle Pneumatic Actuator by passing input from Operator Joystick
   testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
-
-  //Set Main Mast Power
-  m_mainMast.MastManualControl(m_operatorInput.getJoyY());
-  if (!m_mainMast.getLimitSwitch(2))
-  {
-    testSolenoid.setPneumaticActuator(true);
-  }
-  else
-  {
-    testSolenoid.setPneumaticActuator(false);
-  }
 }
 
 void Robot::TestPeriodic() {

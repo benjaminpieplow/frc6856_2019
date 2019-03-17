@@ -8,7 +8,7 @@
 #include <ctre/Phoenix.h>
 #include <ctre/phoenix/motion/TrajectoryPoint.h>
 #include "Pneumatics.h"
-#include "GlobalVars.h"
+
 
 class MainMast
 {
