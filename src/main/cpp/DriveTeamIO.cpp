@@ -29,7 +29,7 @@ void PilotInput::getController()
 void PilotInput::refineInput()
 {
     //modifier is currently set to calm the robot down, get permission from Dan or Ray before exceeding 0.25
-    const double modifier = 0.3;
+    const double modifier = 0.35;
     xRefinedVel = xAnalogVel * modifier;
     yRefinedVel = yAnalogVel * modifier;
     zRefinedRot = zAnalogRot * modifier;

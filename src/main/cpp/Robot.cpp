@@ -111,14 +111,6 @@ void Robot::TeleopPeriodic()
   //targetPos = m_operatorInput.getJoyY() * 360 * 1.0;
   //m_mainMast.MastTest(targetPos);
 
-  if (limSwitchStateArr[0])
-  {
-    testSolenoid.setPneumaticActuator(true);
-  }
-  else
-  {
-    testSolenoid.setPneumaticActuator(false);
-  }
 }
 
 void Robot::TestPeriodic() {

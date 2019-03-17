@@ -5,17 +5,15 @@
 
 #include "RobotIO.h"
 
-LimitSwitchControl::LimitSwitchControl() {}
-LimitSwitchControl::~LimitSwitchControl() {}
-
-void LimitSwitchControl::initLimitSwitches()
-{
+LimitSwitchControl::LimitSwitchControl() {
     for (int i = 0; i < 9; i++)
     {
         this->m_pLimitSwitchObjectArr[i] = new frc::DigitalInput(i);
         limSwitchStateArr[i] = false;
     }
 }
+
+LimitSwitchControl::~LimitSwitchControl() {}
 
 //Get values from DI Objects and put into Limit Switch Array
 void LimitSwitchControl::updateLimitSwitches()

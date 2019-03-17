@@ -18,6 +18,12 @@ driveTrain::driveTrain()
     pDriveWheel[1] = new TalonSRX(11);
     pDriveWheel[2] = new TalonSRX(12);
     pDriveWheel[3] = new TalonSRX(13);
+
+    for (int i = 0; i < 4; i++) {
+        //driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);
+        this->pDriveWheel[i]->ConfigFactoryDefault(10);
+        this->pDriveWheel[i]->ConfigVoltageCompSaturation(10, 10);
+    }
 }
 
 driveTrain::~driveTrain()
@@ -53,7 +59,7 @@ void driveTrain::calculateDriveMotorVectors()
 {
     for (int i = 0; i < 4; i++) {
         //xRefinedVel, yRefinedVel and zRefinedRot
-        this->motorPower[i] = -1 * this->motorVectorFactor[0][i] * yRefinedVel + this->motorVectorFactor[1][i] * xRefinedVel + zRefinedRot * 0.7;
+        this->motorPower[i] = -1 * this->motorVectorFactor[0][i] * yRefinedVel + this->motorVectorFactor[1][i] * xRefinedVel + zRefinedRot * 0.5;
     }
 }
 
