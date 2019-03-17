@@ -143,6 +143,10 @@ void MainMast::nukeControllers()
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
 }
 
+void MainMast::goTo(int switchNo) {
+    
+}
+
 //CHECKS THE FLIGHT STAGE VARIABLE AND REACTS
 /**
      * Track which stage of a mast flight maneuver the robot is in
@@ -160,11 +164,13 @@ void MainMast::flightStage(int stage)
     switch (stage)
     {
     case 0:
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0.0);
+        this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
         break;
     case 1:
+        this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
         break;
     case 2:
+
         break;
     case 3:
         break;

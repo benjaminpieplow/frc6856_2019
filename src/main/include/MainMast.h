@@ -31,6 +31,8 @@ class MainMast
 
     void updateLimitSwitches();
 
+    void goToSwitch(int switchNo);
+
     void nukeControllers();
 
     bool getLimitSwitch(int limIndex);
