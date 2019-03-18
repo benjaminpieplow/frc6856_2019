@@ -14,10 +14,11 @@ driveTrain::driveTrain()
     motorPower[4] = {0.0};
     
     //Create an array of TalonSRX objects for drive wheels, these will be addressed by the motors
-    pDriveWheel[0] = new TalonSRX(10);
-    pDriveWheel[1] = new TalonSRX(11);
-    pDriveWheel[2] = new TalonSRX(12);
-    pDriveWheel[3] = new TalonSRX(13);
+    //Note: Switched from TalonSRX to WPI_TalonSRX, untested as of yet
+    pDriveWheel[0] = new WPI_TalonSRX(10);
+    pDriveWheel[1] = new WPI_TalonSRX(11);
+    pDriveWheel[2] = new WPI_TalonSRX(12);
+    pDriveWheel[3] = new WPI_TalonSRX(13);
 
     for (int i = 0; i < 4; i++) {
         //driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);

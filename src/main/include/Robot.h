@@ -49,6 +49,9 @@ class Robot : public frc::TimedRobot {
   //Create a Mast
   MainMast m_mainMast;
 
+  //Create a lift system
+  
+
   //Create Testing Pneumatic Cylinder
   PneumaticActuator testSolenoid;
 

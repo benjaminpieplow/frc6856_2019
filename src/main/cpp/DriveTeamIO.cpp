@@ -14,6 +14,7 @@ PilotInput::PilotInput () {}
 //Destructor (empty - like my soul)
 PilotInput::~PilotInput () {}
 
+
 //Call to load controller joystick positions into object's properties
 void PilotInput::getController()
 {
@@ -40,6 +41,11 @@ bool PilotInput::getButton()
     return primaryJoy.GetRawButton(5);
 }
 
+
+/**
+ * OPERATOR INPUT
+ */
+
 OperatorInput::OperatorInput()
 {
     //Still nothing!
@@ -50,6 +56,17 @@ OperatorInput::~OperatorInput()
     //Should probably do this, shouldn't I?
 }
 
+//Returns an int with the current operator mode (drive vs climb)
+int OperatorInput::getControlMode()
+{
+    return this->m_pControlMode;
+}
+
+//Allows Operator to toggle control mode
+void OperatorInput::setControlMode(bool toggleButton)
+{
+
+}
 
 /**
  * Returns the Joystick X axis
