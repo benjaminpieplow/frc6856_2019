@@ -205,12 +205,12 @@ void MainMast::goToSwitch(int switchNo)
 void MainMast::brakeMast()
 {
     this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
-    this->m_pMainMastMotor->NeutralOutput();
+    this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
 }
 void MainMast::coastMast()
 {
     this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
-    this->m_pMainMastMotor->NeutralOutput();
+    this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
 }
 
 //CHECKS THE FLIGHT STAGE VARIABLE AND REACTS
