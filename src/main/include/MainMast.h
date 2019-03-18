@@ -18,7 +18,7 @@ class MainMast
 
     void MainMastInit();
 
-    //Loweres the mast until it hits the lower limit switch
+    //Lowers the mast until it hits the lower limit switch
     void MastHome();
 
     void flightStage(int stage);
@@ -33,9 +33,15 @@ class MainMast
 
     void goToSwitch(int switchNo);
 
+    void brakeMast();
+
+    void coastMast();
+
     void nukeControllers();
 
     bool getLimitSwitch(int limIndex);
+
+    int getLimitSwitch();
 
     private:
     //Mast Motor Controller

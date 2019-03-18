@@ -6,6 +6,7 @@
 #include "MainMast.h"
 #include "MainMastConst.h"
 #include "GlobalVars.h"
+#include <iostream>
 
 MainMast::MainMast()
 {
@@ -143,8 +144,71 @@ void MainMast::nukeControllers()
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
 }
 
-void MainMast::goTo(int switchNo) {
-    
+//UPDATES THE BOOLEAN ARRAY m_pLimitSwitchObjects WITH THE RIO DIO SWITCHES
+void MainMast::updateLimitSwitches()
+{
+    int temp = 0;
+    //resetting the array / setting everything to false
+    for (int ctr2 = 0; ctr2 < 10; ctr2++)
+    {
+        m_pLimitSwitchState[ctr2] = false;
+    }
+    //checking the state of all limit switches then writing it to the array
+    for (int ctr = 0; ctr < 10; ctr++)
+    {
+        if (m_pLimitSwitchObjects[ctr] == 0)
+        {
+            //if it is true, it writes it to the switch state array
+            m_pLimitSwitchState[ctr] = true;
+        }
+    }
+}
+
+//RETURNS (BASED ON ITS DIO NUMBER) WHICH LIMIT SWITCH IS ACTIVATED
+int MainMast::getLimitSwitch()
+{
+    for (int i = 0; i <= 10; i++)
+    {
+        if (m_pLimitSwitchState[i] == true)
+        {
+            return i;
+        }
+    }
+}
+//GETS THE STATE OF THE @PARAM SWITCH
+bool MainMast::getLimitSwitch(int limIndex)
+{
+    if (m_pLimitSwitchState[limIndex] == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+//SENDS THE MAST TO A CERTAIN SWITCH
+void MainMast::goToSwitch(int switchNo)
+{
+    if (getLimitSwitch(switchNo) == false)
+    {
+    }
+    //returns from member if the switch is already activated
+    else
+    {
+        std::cout << "Already at switch position";
+        return;
+    }
+}
+
+void MainMast::brakeMast()
+{
+    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+}
+void MainMast::coastMast()
+{
+    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
 }
 
 //CHECKS THE FLIGHT STAGE VARIABLE AND REACTS
@@ -160,25 +224,7 @@ void MainMast::goTo(int switchNo) {
      */
 void MainMast::flightStage(int stage)
 {
-    //this switch checks what action needs to be done
-    switch (stage)
+    switch (m_pFlightStage)
     {
-    case 0:
-        this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
-        break;
-    case 1:
-        this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
-        break;
-    case 2:
-
-        break;
-    case 3:
-        break;
-    case 4:
-        break;
-    case 5:
-        break;
-    case 6:
-        break;
     }
 }
