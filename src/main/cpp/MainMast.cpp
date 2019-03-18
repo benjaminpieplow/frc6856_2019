@@ -8,19 +8,15 @@
 
 MainMast::MainMast()
 {
-    //Initialize the Motor Controllers (Note: MainMastMotor MUST be a TalonSRX as it uses an encoder)
+    //Initialize the Motor Controllers (Note: MainMastMotor MUST be a TalonSRX if it uses an encoder)
     this->m_pMainMastMotor = new WPI_TalonSRX(4);
     this->m_pMainMastMotorSlave = new WPI_TalonSRX(3);
-    
-    this->m_pTestLiftMotor = new WPI_TalonSRX(2);
-
-    //Enable Active Braking on the mast motor (reduces coasting)
-    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 
     //Set 2nd Motor to slave to Primary Motor Controller
     this->m_pMainMastMotorSlave->Set(ControlMode::Follower, 4);
 
-
+    //Enable Active Braking on the mast motor (reduces coasting)
+    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 }
 
 MainMast::~MainMast() {}
@@ -35,12 +31,50 @@ void MainMast::MastHome()
     if (limSwitchStateArr[0]) {}
 }
 
-void MainMast::MainMastInit()
-{
-}
 
 /**
- * You should probably deprecate this...
+ * Experimental: Use the Talon's Position Hold feature
+ * Pass a desired sensor position in encoder counts
+ * Status: EXPERIMENTAL
+ */
+void MainMast::MastTest(double targetPos)
+{
+    this->m_pMainMastMotor->Set(ControlMode::MotionMagic, targetPos);
+}
+
+
+
+/**
+ * A testing method to control output power to the MainMast Motor based on operator joystick input
+ * (or any double you pass it, takes values form -1 to 1)
+ */
+void MainMast::MastManualControl(double targetPower)
+{
+    if (!limSwitchStateArr[0]) {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+    }
+    else
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
+    }
+}
+
+
+/**
+ * Resets controllers to factory defaults - There's something in the manual about factory defaults 
+ * only taking effect after rebooting a controller? Not sure, [Citation Required]
+ */
+void MainMast::nukeControllers()
+{
+    this->m_pMainMastMotor->ConfigFactoryDefault();
+    this->m_pMainMastMotorSlave->ConfigFactoryDefault();
+}
+
+
+
+/**
+ * Motion Control code.
+ * Might use some day?
  */
 void MainMast::MastTestInit()
 {
@@ -108,47 +142,4 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->ConfigMotionCruiseVelocity(150, 10);
     //Max Acceleration of Motion Profile in counts per 100ms per second
     this->m_pMainMastMotor->ConfigMotionAcceleration(150, 10);
-}
-
-/**
- * Experimental: Use the Talon's Position Hold feature
- * Pass a desired sensor position in encoder counts
- * Status: EXPERIMENTAL
- */
-void MainMast::MastTest(double targetPos)
-{
-    this->m_pMainMastMotor->Set(ControlMode::MotionMagic, targetPos);
-}
-
-
-
-/**
- * A testing method to control output power to the MainMast Motor based on operator joystick input
- * (or any double you pass it, takes values form -1 to 1)
- */
-void MainMast::MastManualControl(double targetPower)
-{
-    if (!limSwitchStateArr[0]) {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
-    }
-    else
-    {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
-    }
-}
-
-
-/**
- * Resets controllers to factory defaults - There's something in the manual about factory defaults 
- * only taking effect after rebooting a controller? Not sure, [Citation Required]
- */
-void MainMast::nukeControllers()
-{
-    this->m_pMainMastMotor->ConfigFactoryDefault();
-    this->m_pMainMastMotorSlave->ConfigFactoryDefault();
-}
-
-void MainMast::LiftManualControl(double targetPower)
-{
-    this->m_pTestLiftMotor->Set(ControlMode::PercentOutput, targetPower);
 }

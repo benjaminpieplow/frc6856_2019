@@ -18,6 +18,7 @@
 #include "MainMast.h"
 #include "Pneumatics.h"
 #include "RobotIO.h"
+#include "LiftSystem.h"
 
 
 
@@ -50,9 +51,5 @@ class Robot : public frc::TimedRobot {
   MainMast m_mainMast;
 
   //Create a lift system
-  
-
-  //Create Testing Pneumatic Cylinder
-  PneumaticActuator testSolenoid;
-
+  LiftSystem m_liftSystem;
 };

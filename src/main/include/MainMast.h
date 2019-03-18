@@ -32,15 +32,13 @@ class MainMast
 
     void nukeControllers();
 
-    void LiftManualControl(double targetPower);
-
     private:
     //Mast Motor Controllers
     WPI_TalonSRX* m_pMainMastMotor;
     WPI_TalonSRX* m_pMainMastMotorSlave;
 
     //Test Lift Motor
-    WPI_TalonSRX* m_pTestLiftMotor;
+    //WPI_TalonSRX* m_pTestLiftMotor;
 
     //Mast Homing/Limit Switches
     frc::DigitalInput* m_pLimitSwitchObjects[10];

@@ -4,3 +4,26 @@
 
 #include "LiftSystem.h"
 
+
+LiftSystem::LiftSystem()
+{
+    this->m_pRearLiftMotor = new WPI_TalonSRX(20);
+    this->m_pFrontLiftMotorMaster = new WPI_TalonSRX(21);
+    this->m_pFrontLiftMotorSlave = new WPI_TalonSRX(22);
+}
+
+LiftSystem::~LiftSystem()
+{
+    //Just reboot the Rio
+}
+
+
+void LiftSystem::SetRearLiftPower(double motorPower)
+{
+    this->m_pRearLiftMotor->Set(ControlMode::PercentOutput, motorPower);
+}
+
+void LiftSystem::SetFrontArmPower(double motorPower)
+{
+    this->m_pFrontLiftMotorMaster->Set(ControlMode::PercentOutput, motorPower);
+}

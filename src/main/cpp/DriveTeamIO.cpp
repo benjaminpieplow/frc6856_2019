@@ -63,8 +63,29 @@ int OperatorInput::getControlMode()
 }
 
 //Allows Operator to toggle control mode
-void OperatorInput::setControlMode(bool toggleButton)
+void OperatorInput::toggleControlMode(bool toggleButton)
 {
+  //If the button is pressed AND the check-bit is enabled, change the control mode and flip the check latch
+  if (toggleButton && this->m_pControlModeHasChanged)
+  {
+    //Reverse the actuator
+    if (this->m_pControlMode == 0)
+    {
+      this->m_pControlMode = 1;
+    }
+    else
+    {
+      this->m_pControlMode = 0;
+    }
+    //Disables this IF statement until the trigger is released (prevents cycling the cylinder when trigger is held for >10ms)
+    this->m_pControlModeHasChanged = false;
+  }
+
+  //If the trigger is not being pulled, re-enable the toggle
+  if (!toggleButton && !this->m_pControlModeHasChanged)
+  {
+    this->m_pControlModeHasChanged = true;
+  }
 
 }
 
@@ -85,9 +106,13 @@ double OperatorInput::getJoyY()
     return operatorJoy.GetRawAxis(1);
 }
 
+bool OperatorInput::getJoyButton(int joyButton)
+{
+    return operatorJoy.GetRawButton(joyButton);
+}
+
 /**
  * Returns Trigger Position
- * Currently used for Pneumatic Actuator
  */
 bool OperatorInput::getJoyTrigger()
 {

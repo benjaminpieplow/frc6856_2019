@@ -47,7 +47,7 @@ class OperatorInput
     int getControlMode();
 
     //Allows Operator to toggle control mode
-    void setControlMode(bool toggleButton);
+    void toggleControlMode(bool toggleButton);
 
     //Returns Joystick X Axis
     double getJoyX();
@@ -57,6 +57,9 @@ class OperatorInput
 
     //Returns Joystick Trigger
     bool getJoyTrigger();
+
+    bool getJoyButton(int joyButton);
+
 
     private:
     //Operator's Joystick
@@ -69,5 +72,7 @@ class OperatorInput
      * 1    |   Climb
      */
     int m_pControlMode = 0;
+
+    bool m_pControlModeHasChanged = false;
 
 };

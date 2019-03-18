@@ -13,5 +13,13 @@ class LiftSystem
     LiftSystem();
     ~LiftSystem();
 
-    
+    void SetRearLiftPower(double motorPower);
+
+    void SetFrontArmPower(double motorPower);
+
+
+    private:
+    WPI_TalonSRX* m_pRearLiftMotor;
+    WPI_TalonSRX* m_pFrontLiftMotorMaster;
+    WPI_TalonSRX* m_pFrontLiftMotorSlave;
 };

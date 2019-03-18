@@ -102,17 +102,8 @@ void Robot::TeleopPeriodic()
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
-  //Toggle Pneumatic Actuator by passing input from Operator Joystick
-  testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
-
   //Set Main Mast Power
   m_mainMast.MastManualControl(m_operatorInput.getJoyY());
-  //double targetPos;
-  //targetPos = m_operatorInput.getJoyY() * 360 * 1.0;
-  //m_mainMast.MastTest(targetPos);
-
-  //Set Test Lift Power
-  m_mainMast.LiftManualControl(m_operatorInput.getJoyX());
 
 }
 
