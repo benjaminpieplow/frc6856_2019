@@ -29,7 +29,7 @@ class MainMast
 
     void MastManualControl(double targetPower);
 
-    void updateLimitSwitches();
+    int updateLimitSwitches();
 
     void goToSwitch(int switchNo);
 

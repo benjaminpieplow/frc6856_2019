@@ -29,8 +29,9 @@ MainMast::~MainMast() {}
  */
 void MainMast::MastHome()
 {
-    if (limSwitchStateArr[0])
+    if (limSwitchStateArr[0] != true)
     {
+
     }
 }
 
@@ -144,10 +145,12 @@ void MainMast::nukeControllers()
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
 }
 
-//UPDATES THE BOOLEAN ARRAY m_pLimitSwitchObjects WITH THE RIO DIO SWITCHES
-void MainMast::updateLimitSwitches()
+//UPDATES THE BOOLEAN ARRAY m_pLimitSwitchObjects WITH THE RIO DIO SWITCHES | IT RETURNS -1 IF NO SWITCH IS ACTIVATED, 0 IF THERE IS ONE ACTIVE
+int MainMast::updateLimitSwitches()
 {
     int temp = 0;
+    bool activatedSwitchFound = false;
+
     //resetting the array / setting everything to false
     for (int ctr2 = 0; ctr2 < 10; ctr2++)
     {
@@ -160,13 +163,23 @@ void MainMast::updateLimitSwitches()
         {
             //if it is true, it writes it to the switch state array
             m_pLimitSwitchState[ctr] = true;
+            activatedSwitchFound = true;
         }
+    }
+    if (activatedSwitchFound != true) {
+        //Return -1 if not activated switch was found
+        return -1;
+    }
+    else {
+        //Return if not everything went smoothly
+        return 0;
     }
 }
 
 //RETURNS (BASED ON ITS DIO NUMBER) WHICH LIMIT SWITCH IS ACTIVATED
 int MainMast::getLimitSwitch()
 {
+    updateLimitSwitches();
     for (int i = 0; i <= 10; i++)
     {
         if (m_pLimitSwitchState[i] == true)
@@ -193,6 +206,14 @@ void MainMast::goToSwitch(int switchNo)
 {
     if (getLimitSwitch(switchNo) == false)
     {
+        //checking if desired switch is above current one
+        if (getLimitSwitch() > switchNo) {
+
+        }
+        //checking if desired switch is below current one
+        if (getLimitSwitch() < switchNo) {
+
+        }
     }
     //returns from member if the switch is already activated
     else
@@ -226,7 +247,5 @@ void MainMast::coastMast()
      */
 void MainMast::flightStage(int stage)
 {
-    switch (m_pFlightStage)
-    {
-    }
+    
 }
