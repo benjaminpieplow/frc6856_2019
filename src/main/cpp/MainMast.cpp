@@ -11,6 +11,9 @@ MainMast::MainMast()
     //Initialize the Motor Controllers (Note: MainMastMotor MUST be a TalonSRX if it uses an encoder)
     this->m_pMainMastMotor = new WPI_TalonSRX(4);
     this->m_pMainMastMotorSlave = new WPI_TalonSRX(3);
+    this->m_pMainMastMotor->ConfigFactoryDefault();
+    this->m_pMainMastMotorSlave->ConfigFactoryDefault();
+    
 
     //Set 2nd Motor to slave to Primary Motor Controller
     this->m_pMainMastMotorSlave->Set(ControlMode::Follower, 4);

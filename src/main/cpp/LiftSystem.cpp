@@ -10,6 +10,11 @@ LiftSystem::LiftSystem()
     this->m_pRearLiftMotor = new WPI_TalonSRX(20);
     this->m_pFrontLiftMotorMaster = new WPI_TalonSRX(21);
     this->m_pFrontLiftMotorSlave = new WPI_TalonSRX(22);
+
+    //Nuke the controllers
+    this->m_pRearLiftMotor->ConfigFactoryDefault();
+    this->m_pFrontLiftMotorMaster->ConfigFactoryDefault();
+    this->m_pFrontLiftMotorSlave->ConfigFactoryDefault();
 }
 
 LiftSystem::~LiftSystem()

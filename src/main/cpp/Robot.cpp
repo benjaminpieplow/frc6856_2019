@@ -102,28 +102,15 @@ void Robot::TeleopPeriodic()
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
-  //Set Main Mast Power
-  m_mainMast.MastManualControl(m_operatorInput.getJoyY());
 
-  //If the pilot hits the button, intake balls
-  if (m_pilotInput.getCtrlButton(10))
-  {
-    m_gripper.setGripperIntakeWheels(1);
-  }
-  else
-  {
-    m_gripper.setGripperIntakeWheels(0);
-  }
 
-  //If the operator hits the button, spin the LIFT ARM wheels (Note: independant of drive mode for now)
-  if (m_operatorInput.getJoyButton(10))
-  {
-    m_gripper.setGripperIntakeWheels(1);
-  }
-  else
-  {m_gripper.setGripperIntakeWheels(0);
-  }
+  //If the pilot hits the button, toggle the gripper
+  m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
+  
+ 
 
+  m_operatorInput.toggleControlMode(5);
+  
   //Divide the code into the two drive modes (DRIVE and LIFT)
   if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
   {
@@ -137,18 +124,19 @@ void Robot::TeleopPeriodic()
     //Extend/retract rear lift mechanism based on button presses, shut off if released
     if (m_operatorInput.getJoyButton(2))
     {
-      m_liftSystem.SetRearLiftPower(1);
+      m_liftSystem.SetRearLiftPower(1.0);
     }
     else if (m_operatorInput.getJoyButton(3))
     {
-      m_liftSystem.SetRearLiftPower(-1);
+      m_liftSystem.SetRearLiftPower(-1.0);
     }
     else
     {
-      m_liftSystem.SetRearLiftPower(0);
+      m_liftSystem.SetRearLiftPower(0.0);
     }
   }
 
+  
 }
 
 void Robot::TestPeriodic() {

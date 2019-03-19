@@ -6,6 +6,7 @@
 #pragma once
 
 #include <frc/DoubleSolenoid.h>
+#include <iostream>
 
 class PneumaticActuator
 {

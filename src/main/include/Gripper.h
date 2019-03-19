@@ -14,13 +14,18 @@ class Gripper
     Gripper();
     ~Gripper();
 
+    //Set Gripper Power
     void setGripperIntakeWheels(double motorPower);
+
 
     void toggleGripperClaw(bool button);
 
     private:
     //Cylinder for the gripper
     PneumaticActuator* m_pGripperCylinder;
+
+    //Motor for the gripper pitch
+    WPI_TalonSRX* m_pGripperPitchMotor;
 
     //Motors for the grippper wheels
     WPI_TalonSRX* m_pGripperIntakeMotorMaster;
