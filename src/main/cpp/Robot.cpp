@@ -105,6 +105,31 @@ void Robot::TeleopPeriodic()
   //Set Main Mast Power
   m_mainMast.MastManualControl(m_operatorInput.getJoyY());
 
+  //Divide the code into the two drive modes (DRIVE and LIFT)
+  if (m_operatorInput.getControlMode == 0) //If in DRIVE mode
+  {
+    m_mainMast.MastManualControl(m_operatorInput.getJoyY());
+  }
+  else if (m_operatorInput.getControlMode == 1) //If in LIFT mode
+  {
+    //Set Front Lift Arm Power to Joystick Y axis
+    m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
+
+    //Extend/retract rear lift mechanism based on button presses, shut off if released
+    if (m_operatorInput.getJoyButton(2))
+    {
+      m_liftSystem.SetRearLiftPower(1);
+    }
+    else if (m_operatorInput.getJoyButton(3))
+    {
+      m_liftSystem.SetRearLiftPower(-1);
+    }
+    else
+    {
+      m_liftSystem.SetRearLiftPower(0);
+    }
+  }
+
 }
 
 void Robot::TestPeriodic() {

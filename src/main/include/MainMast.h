@@ -40,9 +40,6 @@ class MainMast
     //Test Lift Motor
     //WPI_TalonSRX* m_pTestLiftMotor;
 
-    //Mast Homing/Limit Switches
-    frc::DigitalInput* m_pLimitSwitchObjects[10];
-
     //Pneumatic Brake for Mast
     //PneumaticActuator* m_pBrakePneumatic;
 
