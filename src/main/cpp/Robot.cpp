@@ -105,12 +105,31 @@ void Robot::TeleopPeriodic()
   //Set Main Mast Power
   m_mainMast.MastManualControl(m_operatorInput.getJoyY());
 
+  //If the pilot hits the button, intake balls
+  if (m_pilotInput.getCtrlButton(10))
+  {
+    m_gripper.setGripperIntakeWheels(1);
+  }
+  else
+  {
+    m_gripper.setGripperIntakeWheels(0);
+  }
+
+  //If the operator hits the button, spin the LIFT ARM wheels (Note: independant of drive mode for now)
+  if (m_operatorInput.getJoyButton(10))
+  {
+    m_gripper.setGripperIntakeWheels(1);
+  }
+  else
+  {m_gripper.setGripperIntakeWheels(0);
+  }
+
   //Divide the code into the two drive modes (DRIVE and LIFT)
-  if (m_operatorInput.getControlMode == 0) //If in DRIVE mode
+  if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
   {
     m_mainMast.MastManualControl(m_operatorInput.getJoyY());
   }
-  else if (m_operatorInput.getControlMode == 1) //If in LIFT mode
+  else if (m_operatorInput.getControlMode() == 1) //If in LIFT mode
   {
     //Set Front Lift Arm Power to Joystick Y axis
     m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());

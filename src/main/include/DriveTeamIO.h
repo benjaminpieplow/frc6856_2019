@@ -19,7 +19,7 @@ class PilotInput {
     void refineInput();
 
     //Get a button state, currently for test
-    bool getButton();
+    bool getCtrlButton(int ctrlButton);
 
     private:
     //Pilot's Controller

@@ -19,6 +19,7 @@
 #include "Pneumatics.h"
 #include "RobotIO.h"
 #include "LiftSystem.h"
+#include "Gripper.h"
 
 
 
@@ -41,6 +42,7 @@ class Robot : public frc::TimedRobot {
 
   //Create IO
   LimitSwitchControl m_limitSwitch;
+  
   PilotInput m_pilotInput;
   OperatorInput m_operatorInput;
 
@@ -52,4 +54,8 @@ class Robot : public frc::TimedRobot {
 
   //Create a lift system
   LiftSystem m_liftSystem;
+
+  //Create a gripper
+  Gripper m_gripper;
+  
 };

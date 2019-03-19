@@ -7,6 +7,11 @@
 
 Gripper::Gripper()
 {
+    m_pGripperCylinder = new PneumaticActuator(4,5);
+}
+
+Gripper::~Gripper()
+{
 
 }
 

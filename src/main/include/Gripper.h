@@ -25,4 +25,4 @@ class Gripper
     //Motors for the grippper wheels
     WPI_TalonSRX* m_pGripperIntakeMotorMaster;
     WPI_TalonSRX* m_pGripperIntakeMotorSlave;
-}
+};

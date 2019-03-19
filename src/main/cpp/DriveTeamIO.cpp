@@ -36,9 +36,9 @@ void PilotInput::refineInput()
     zRefinedRot = zAnalogRot * modifier;
 }
 
-bool PilotInput::getButton()
+bool PilotInput::getCtrlButton(int ctrlButton)
 {
-    return primaryJoy.GetRawButton(5);
+    return primaryJoy.GetRawButton(ctrlButton);
 }
 
 
