@@ -1,6 +1,15 @@
+
+
 /**
  * Code for controlling the rise and fall of the main lifting mast.
  * Should have take data from OpsTeamIO and be able to hold the mast at a certain height using the rotary encoders
+ * 
+ * 
+ * 
+ * 
+ * ERROR CODES 
+ * -1 = No activated limit switch was found
+ * 
  */
 
 #include "MainMast.h"
@@ -29,9 +38,19 @@ MainMast::~MainMast() {}
  */
 void MainMast::MastHome()
 {
-    if (limSwitchStateArr[0] != true)
+    //the first part of this loop check just sees if it is already at switch one,
+    //the second part is important becuase it checks if there is a switch activated
+    if (m_pLimitSwitchState[0] != true && updateLimitSwitches() != -1)
     {
-
+        //moves the mast down until the first / Bottom-most limit switch is active
+        while (m_pLimitSwitchState[0] != true)
+        {
+            updateLimitSwitches();
+            //THIS CODE ASSUMES THAT A -<VALUE> WILL MOVE THE MAST DOWN
+            this->m_pMainMastMotor->Set(ControlMode::PercentOutput, -1.0);
+        }
+        //this prevents the mast from pushing down on the limit switch
+        brakeMast();
     }
 }
 
@@ -156,6 +175,7 @@ int MainMast::updateLimitSwitches()
     {
         m_pLimitSwitchState[ctr2] = false;
     }
+
     //checking the state of all limit switches then writing it to the array
     for (int ctr = 0; ctr < 10; ctr++)
     {
@@ -166,12 +186,15 @@ int MainMast::updateLimitSwitches()
             activatedSwitchFound = true;
         }
     }
-    if (activatedSwitchFound != true) {
-        //Return -1 if not activated switch was found
+    if (activatedSwitchFound != true)
+    {
+        std::cout << "LIMIT SWITCH ERROR CODE: -1; PLEASE USE MAST *MANUALLY*";
+        //Return -1 if no activated switch was found
         return -1;
     }
-    else {
-        //Return if not everything went smoothly
+    else
+    {
+        //Return if everything went smoothly
         return 0;
     }
 }
@@ -201,18 +224,23 @@ bool MainMast::getLimitSwitch(int limIndex)
     }
 }
 
+/*
+
+*******THIS METHOD/MEMBER IS NOT DEFINED! IT WILL NOT WORK DO NOT EXECUTE THIS CODE!******
+
+*/
 //SENDS THE MAST TO A CERTAIN SWITCH
 void MainMast::goToSwitch(int switchNo)
 {
     if (getLimitSwitch(switchNo) == false)
     {
         //checking if desired switch is above current one
-        if (getLimitSwitch() > switchNo) {
-
+        if (getLimitSwitch() > switchNo)
+        {
         }
         //checking if desired switch is below current one
-        if (getLimitSwitch() < switchNo) {
-
+        if (getLimitSwitch() < switchNo)
+        {
         }
     }
     //returns from member if the switch is already activated
@@ -247,5 +275,4 @@ void MainMast::coastMast()
      */
 void MainMast::flightStage(int stage)
 {
-    
 }
