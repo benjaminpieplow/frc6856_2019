@@ -16,7 +16,12 @@
 #include "MainMastConst.h"
 #include "GlobalVars.h"
 #include <frc/GenericHID.h>
+#include <frc/Joystick.h>
+#include <frc/JoystickBase.h>
 #include <iostream>
+
+//controller joystick
+static frc::Joystick joystick(1);
 
 MainMast::MainMast()
 {
@@ -147,6 +152,7 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->ConfigMotionCruiseVelocity(150, 10);
     //Max Acceleration of Motion Profile in counts per 100ms per second
     this->m_pMainMastMotor->ConfigMotionAcceleration(150, 10);
+
     return;
 }
 
@@ -170,23 +176,33 @@ void MainMast::MastManualControl(double targetPower)
     bool manualMastControlEnabled = true;
 
     //locking the control until driver/pilot presses the button to release manual control
-    while (manualMastControlEnabled == true) {
-        
+    while (manualMastControlEnabled == true)
+    {
+
         //CODE TO MANUALLY MOVE TO MAST
-        while ()
+        //NOTE:** the 0.1 in the if is for drift, and so that the driver has some sway in the joystick when braked
+        if (joystick.GetThrottle() > 0.1)
+        {
+            m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle - 0.1) * (targetPower));
+        }
+        else if (joystick.GetThrottle < -0.1)
+        {
+            m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle + 0.1) * (targetPower));
+        }
+        else if (joystick.GetThrottle() > -0.1 && joystick.GetThrottle() < 0.1)
+        {
+            m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
+            brakeMast();
+        }
 
-        //CODE TO GO UP ONE SWITCH
-
-        //CODE TO GO DOWN ONE SWITCH
-
-        //CODE TO BRAKE
-
-        //CODE TO COAST
-
-        //CODE TO RELEASE MANUAL CONTROL
+        //CODE TO RELEASE MANUAL CONTROL (joystick button6)
+        if (joystick.GetRawButtonPressed(6) == true)
+        {
+            manualMastControlEnabled = false;
+            break;
+        }
     }
-
-
+    return;
 }
 
 /**

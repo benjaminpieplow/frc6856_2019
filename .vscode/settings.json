@@ -15,5 +15,6 @@
   "files.associations": {
     "iostream": "cpp",
     "cstddef": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "Enabled"
 }

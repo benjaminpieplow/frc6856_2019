@@ -43,6 +43,8 @@ class MainMast
 
     int getLimitSwitch();
 
+    void goToNearestSwitch();
+
     private:
     //Mast Motor Controller
     TalonSRX* m_pMainMastMotor;
@@ -71,5 +73,7 @@ class MainMast
      * 6 = FLYUNDER (overshot target, motor )
      */
     int m_pFlightStage;
+
+    int lastSwitchEnabled;
 
 };
