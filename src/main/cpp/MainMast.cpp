@@ -15,6 +15,7 @@
 #include "MainMast.h"
 #include "MainMastConst.h"
 #include "GlobalVars.h"
+#include <frc/GenericHID.h>
 #include <iostream>
 
 MainMast::MainMast()
@@ -38,6 +39,8 @@ MainMast::~MainMast() {}
  */
 void MainMast::MastHome()
 {
+    std::cout << "Moving Mast to first limit switch..." << std::endl;
+
     //the first part of this loop check just sees if it is already at switch one,
     //the second part is important becuase it checks if there is a switch activated
     if (m_pLimitSwitchState[0] != true && updateLimitSwitches() != -1)
@@ -69,6 +72,7 @@ void MainMast::MastHome()
         //this prevents the mast from pushing down on the limit switch
         brakeMast();
     }
+    return;
 }
 
 void MainMast::MainMastInit()
@@ -143,6 +147,7 @@ void MainMast::MastTestInit()
     this->m_pMainMastMotor->ConfigMotionCruiseVelocity(150, 10);
     //Max Acceleration of Motion Profile in counts per 100ms per second
     this->m_pMainMastMotor->ConfigMotionAcceleration(150, 10);
+    return;
 }
 
 /**
@@ -153,6 +158,7 @@ void MainMast::MastTestInit()
 void MainMast::MastTest(double targetPos)
 {
     this->m_pMainMastMotor->Set(ControlMode::MotionMagic, targetPos);
+    return;
 }
 
 /**
@@ -161,14 +167,26 @@ void MainMast::MastTest(double targetPos)
  */
 void MainMast::MastManualControl(double targetPower)
 {
-    if (!limSwitchStateArr[0])
-    {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+    bool manualMastControlEnabled = true;
+
+    //locking the control until driver/pilot presses the button to release manual control
+    while (manualMastControlEnabled == true) {
+        
+        //CODE TO MANUALLY MOVE TO MAST
+        while ()
+
+        //CODE TO GO UP ONE SWITCH
+
+        //CODE TO GO DOWN ONE SWITCH
+
+        //CODE TO BRAKE
+
+        //CODE TO COAST
+
+        //CODE TO RELEASE MANUAL CONTROL
     }
-    else
-    {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
-    }
+
+
 }
 
 /**
@@ -179,6 +197,7 @@ void MainMast::nukeControllers()
 {
     this->m_pMainMastMotor->ConfigFactoryDefault();
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
+    return;
 }
 
 //UPDATES THE BOOLEAN ARRAY m_pLimitSwitchObjects WITH THE RIO DIO SWITCHES | IT RETURNS -1 IF NO SWITCH IS ACTIVATED, 0 IF THERE IS ONE ACTIVE
@@ -186,6 +205,7 @@ int MainMast::updateLimitSwitches()
 {
     int temp = 0;
     bool activatedSwitchFound = false;
+    std::cout << "Reading Limit Switches" << std::endl;
 
     //resetting the array / setting everything to false
     for (int ctr2 = 0; ctr2 < 10; ctr2++)
@@ -205,7 +225,7 @@ int MainMast::updateLimitSwitches()
     }
     if (activatedSwitchFound != true)
     {
-        std::cout << "LIMIT SWITCH ERROR CODE: -1; PLEASE USE MAST *MANUALLY*";
+        std::cout << "LIMIT SWITCH ERROR CODE: -1; PLEASE USE MAST MANUALLY" << std::endl;
         //Return -1 if no activated switch was found
         return -1;
     }
@@ -219,6 +239,8 @@ int MainMast::updateLimitSwitches()
 //RETURNS (BASED ON ITS DIO NUMBER) WHICH LIMIT SWITCH IS ACTIVATED
 int MainMast::getLimitSwitch()
 {
+    std::cout << "Finding current limit switch" << std::endl;
+
     updateLimitSwitches();
     for (int i = 0; i <= 10; i++)
     {
@@ -231,24 +253,30 @@ int MainMast::getLimitSwitch()
 //GETS THE STATE OF THE @PARAM SWITCH
 bool MainMast::getLimitSwitch(int limIndex)
 {
+    std::cout << "Checking limit switch: " << limIndex << std::endl;
+
     if (m_pLimitSwitchState[limIndex] == true)
     {
+        std::cout << "Found" << std::endl;
         return true;
     }
     else
     {
+        std::cout << "Not found" << std::endl;
         return false;
     }
 }
 
 /*
 
-*******THIS METHOD/MEMBER IS NOT DEFINED! IT WILL NOT WORK DO NOT EXECUTE THIS CODE!******
+*******THIS METHOD/MEMBER IS NOT DEFINED! IT WILL NOT WORK, DO NOT EXECUTE THIS CODE!******
 
 */
 //SENDS THE MAST TO A CERTAIN SWITCH
 void MainMast::goToSwitch(int switchNo)
 {
+
+    std::cout << "Moving to switch " << switchNo << std::endl;
     if (getLimitSwitch(switchNo) == false)
     {
         //checking if desired switch is above current one
@@ -266,17 +294,21 @@ void MainMast::goToSwitch(int switchNo)
         std::cout << "Already at switch position";
         return;
     }
+    return;
 }
 
 void MainMast::brakeMast()
 {
+    std::cout << "Braking mast..." << std::endl;
     this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
     this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
+    return;
 }
 void MainMast::coastMast()
 {
     this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
     this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
+    return;
 }
 
 //CHECKS THE FLIGHT STAGE VARIABLE AND REACTS

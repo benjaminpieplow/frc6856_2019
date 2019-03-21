@@ -26,8 +26,6 @@ void Robot::RobotInit() {
 
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
-  
-  
 
   //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
