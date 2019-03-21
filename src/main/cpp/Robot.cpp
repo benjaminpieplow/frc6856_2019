@@ -106,43 +106,47 @@ void Robot::TeleopPeriodic()
   //If the pilot hits the button, toggle the gripper
   m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
   //Set Gripper Wheel Speed
-  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(4)));
-  
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 1, -0.5, 0.0));
+
+  //Front Intake is drive, therefor persistant
+  m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyTrigger(), false));
+
  
   //Toggles between DRIVE and LIFT
-  m_operatorInput.toggleControlMode(6);
+  m_operatorInput.toggleControlMode(m_operatorInput.getJoyButton(6));
+
 
   
   //Divide the code into the two drive modes (DRIVE and LIFT)
   if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
   {
-    //Set Mast Height
+    /**
+     * SET Motor Power Levels for DRIVE mode
+     */
     m_mainMast.MastManualControl(m_operatorInput.getJoyY());
     m_gripper.setGripperPitchPower(m_operatorInput.getJoyX());
+
+    /**
+     * SET Motor Power Levels TO ZERO for LIFT mode
+     */
+    m_liftSystem.SetFrontArmPower(0);
+    m_liftSystem.SetRearLiftPower(0);
+
   }
   else if (m_operatorInput.getControlMode() == 1) //If in LIFT mode
   {
+    /**
+     * SET Motor Power levels for LIFT mode
+     */
     //Set Front Lift Arm Power to Joystick Y axis
     m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
-
-    m_liftSystem.SetFrontArmWheelPower(m_operatorInput.getJoyTrigger());
-
-    //Extend/retract rear lift mechanism based on button presses, shut off if released
     m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
-/** Old way of doing the above, left in because it worked
-    if (m_operatorInput.getJoyButton(2))
-    {
-      m_liftSystem.SetRearLiftPower(1.0);
-    }
-    else if (m_operatorInput.getJoyButton(3))
-    {
-      m_liftSystem.SetRearLiftPower(-1.0);
-    }
-    else
-    {
-      m_liftSystem.SetRearLiftPower(0.0);
-    }
-*/
+
+    /**
+     * SET Motor Power levels TO ZERO for DRIVE mode
+     */
+    m_mainMast.MastManualControl(0);
+    m_gripper.setGripperPitchPower(0);
   }
 
   

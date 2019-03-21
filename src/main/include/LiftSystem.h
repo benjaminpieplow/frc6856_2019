@@ -24,6 +24,6 @@ class LiftSystem
     WPI_TalonSRX* m_pRearLiftMotor;
     WPI_TalonSRX* m_pFrontLiftMotorMaster;
     WPI_TalonSRX* m_pFrontLiftMotorSlave;
-    WPI_TalonSRX* m_pFrontArmWheelMaster;
-    WPI_TalonSRX* m_pFrontArmWheelSlave;
+    WPI_VictorSPX* m_pFrontArmWheelMaster;
+    WPI_VictorSPX* m_pFrontArmWheelSlave;
 };

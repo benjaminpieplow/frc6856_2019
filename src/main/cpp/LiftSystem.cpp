@@ -7,13 +7,13 @@
 
 LiftSystem::LiftSystem()
 {
-    this->m_pRearLiftMotor = new WPI_TalonSRX(20);
+    this->m_pRearLiftMotor = new WPI_TalonSRX(34);
     
-    this->m_pFrontLiftMotorMaster = new WPI_TalonSRX(21);
-    this->m_pFrontLiftMotorSlave = new WPI_TalonSRX(22);
+    this->m_pFrontLiftMotorMaster = new WPI_TalonSRX(26);
+    this->m_pFrontLiftMotorSlave = new WPI_TalonSRX(27);
 
-    this->m_pFrontArmWheelMaster = new WPI_TalonSRX(30);
-    this->m_pFrontArmWheelSlave = new WPI_TalonSRX(31);
+    this->m_pFrontArmWheelMaster = new WPI_VictorSPX(30);
+    this->m_pFrontArmWheelSlave = new WPI_VictorSPX(31);
 
     //Nuke the controllers
     this->m_pRearLiftMotor->ConfigFactoryDefault();
@@ -23,8 +23,8 @@ LiftSystem::LiftSystem()
     this->m_pFrontArmWheelSlave->ConfigFactoryDefault();
 
     //Slave the slave controllers
-    this->m_pFrontArmWheelSlave->Set(ControlMode::Follower, 21);
-    this->m_pFrontLiftMotorSlave->Set(ControlMode::Follower, 30);
+    this->m_pFrontArmWheelSlave->Set(ControlMode::Follower, 30);
+    this->m_pFrontLiftMotorSlave->Set(ControlMode::Follower, 26);
 }
 
 LiftSystem::~LiftSystem()

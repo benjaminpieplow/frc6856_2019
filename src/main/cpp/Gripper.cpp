@@ -22,7 +22,6 @@ Gripper::Gripper()
 
     this->m_pGripperIntakeMotorSlave->Set(ControlMode::Follower, 20);
 
-    this->m_pGripperPitchMotor->SetNeutralMode(NeutralMode::Brake);
     //Not sure if this has to be done, or if the slave covers it
     this->m_pGripperPitchMotor->SetNeutralMode(NeutralMode::Brake);
 }
