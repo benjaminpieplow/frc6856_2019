@@ -46,8 +46,25 @@ void MainMast::MastHome()
         while (m_pLimitSwitchState[0] != true)
         {
             updateLimitSwitches();
-            //THIS CODE ASSUMES THAT A -<VALUE> WILL MOVE THE MAST DOWN
-            this->m_pMainMastMotor->Set(ControlMode::PercentOutput, -1.0);
+            //this code runs until the 2nd limit switch is activated then the mast is slowed down to 20%
+            while (m_pLimitSwitchState[1] == false)
+            {
+                updateLimitSwitches();
+                //THIS CODE ASSUMES THAT A -<VALUE> WILL MOVE THE MAST DOWN
+                this->m_pMainMastMotor->Set(ControlMode::PercentOutput, -1.0);
+            }
+
+            //this slows down the motor to 20% to avoid slamming down on the limit switch
+            this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0.2);
+
+            //updating position
+            updateLimitSwitches();
+
+            //stops the mast after the first switch is activated
+            if (m_pLimitSwitchState[0] == true)
+            {
+                brakeMast();
+            }
         }
         //this prevents the mast from pushing down on the limit switch
         brakeMast();
