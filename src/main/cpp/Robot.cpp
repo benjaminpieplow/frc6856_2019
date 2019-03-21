@@ -115,7 +115,6 @@ void Robot::TeleopPeriodic()
   //Toggles between DRIVE and LIFT
   m_operatorInput.toggleControlMode(m_operatorInput.getJoyButton(6));
 
-
   
   //Divide the code into the two drive modes (DRIVE and LIFT)
   if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
