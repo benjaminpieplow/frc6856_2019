@@ -40,8 +40,11 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
 
-  //Create IO
+  //Create Limit Switches
   LimitSwitchControl m_limitSwitch;
+
+  //Common Methods
+  Common m_common;
   
   PilotInput m_pilotInput;
   OperatorInput m_operatorInput;

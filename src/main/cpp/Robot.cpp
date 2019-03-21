@@ -93,6 +93,7 @@ void Robot::TeleopPeriodic()
   //Get latest Limit Switch data
   //m_limitSwitch.updateLimitSwitches();
 
+
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
 
@@ -102,26 +103,33 @@ void Robot::TeleopPeriodic()
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
-
-
   //If the pilot hits the button, toggle the gripper
   m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
+  //Set Gripper Wheel Speed
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(4)));
   
  
+  //Toggles between DRIVE and LIFT
+  m_operatorInput.toggleControlMode(6);
 
-  m_operatorInput.toggleControlMode(5);
   
   //Divide the code into the two drive modes (DRIVE and LIFT)
   if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
   {
+    //Set Mast Height
     m_mainMast.MastManualControl(m_operatorInput.getJoyY());
+    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX());
   }
   else if (m_operatorInput.getControlMode() == 1) //If in LIFT mode
   {
     //Set Front Lift Arm Power to Joystick Y axis
     m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
 
+    m_liftSystem.SetFrontArmWheelPower(m_operatorInput.getJoyTrigger());
+
     //Extend/retract rear lift mechanism based on button presses, shut off if released
+    m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
+/** Old way of doing the above, left in because it worked
     if (m_operatorInput.getJoyButton(2))
     {
       m_liftSystem.SetRearLiftPower(1.0);
@@ -134,6 +142,7 @@ void Robot::TeleopPeriodic()
     {
       m_liftSystem.SetRearLiftPower(0.0);
     }
+*/
   }
 
   

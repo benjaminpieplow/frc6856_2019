@@ -6,7 +6,6 @@ This file contains code to actuate movements of the robot, like drivetrain or ar
 #include <frc/TimedRobot.h>
 #include "ctre/Phoenix.h"
 #include <math.h>
-#include "PilotCTRL.h"
 
 
 //Motor power is a value from -1 to 1. Basic implementation sets this from the joystick input, but in future it can be influenced by PID controllers for stabilizing

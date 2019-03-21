@@ -23,3 +23,35 @@ void LimitSwitchControl::updateLimitSwitches()
         limSwitchStateArr[i] = this->m_pLimitSwitchObjectArr[i]->Get();
     }
 }
+
+double Common::twoButtonMotorControl(bool forwardButton, bool reverseButton)
+{
+    if (reverseButton)
+    {
+        return -1.0;
+    }
+    if (forwardButton)
+    {
+        return 1.0;
+    }
+    if (!forwardButton && !reverseButton)
+    {
+        return 0.0;
+    }
+}
+
+double Common::twoButtonMotorControl(bool forwardButton, bool reverseButton, double forwardPower, double reversePower, double idlePower)
+{
+    if (reverseButton)
+    {
+        return reversePower;
+    }
+    if (forwardButton)
+    {
+        return forwardPower;
+    }
+    if (!forwardButton && !reverseButton)
+    {
+        return idlePower;
+    }
+}

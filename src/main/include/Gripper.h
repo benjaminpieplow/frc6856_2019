@@ -17,6 +17,7 @@ class Gripper
     //Set Gripper Power
     void setGripperIntakeWheels(double motorPower);
 
+    void setGripperPitchPower(double motorPower);
 
     void toggleGripperClaw(bool button);
 

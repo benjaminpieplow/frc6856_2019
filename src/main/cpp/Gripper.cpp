@@ -40,7 +40,10 @@ void Gripper::setGripperIntakeWheels(double motorPower)
     this->m_pGripperIntakeMotorMaster->Set(ControlMode::PercentOutput, motorPower);
 }
 
-
+void Gripper::setGripperPitchPower(double motorPower)
+{
+    this->m_pGripperPitchMotor->Set(ControlMode::PercentOutput, motorPower);
+}
 
 /**
  * Pass the raw button input to controll toggling of the pneumatic cylinder
