@@ -19,7 +19,7 @@ class PilotInput {
     void refineInput();
 
     //Get a button state, currently for test
-    bool getButton();
+    bool getCtrlButton(int ctrlButton);
 
     private:
     //Pilot's Controller
@@ -42,6 +42,12 @@ class OperatorInput
     public:
     OperatorInput();
     ~OperatorInput();
+    
+    //Returns an int with the current operator mode (drive vs climb)
+    int getControlMode();
+
+    //Allows Operator to toggle control mode
+    void toggleControlMode(bool toggleButton);
 
     //Returns Joystick X Axis
     double getJoyX();
@@ -52,8 +58,21 @@ class OperatorInput
     //Returns Joystick Trigger
     bool getJoyTrigger();
 
+    bool getJoyButton(int joyButton);
+
+
     private:
     //Operator's Joystick
     frc::Joystick operatorJoy{1};
+
+    //Control mode
+    /**
+     * INT  |   MODE
+     * 0    |   Drive
+     * 1    |   Climb
+     */
+    int m_pControlMode = 0;
+
+    bool m_pControlModeHasChanged = false;
 
 };

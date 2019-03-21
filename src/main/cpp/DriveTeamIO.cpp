@@ -14,6 +14,7 @@ PilotInput::PilotInput () {}
 //Destructor (empty - like my soul)
 PilotInput::~PilotInput () {}
 
+
 //Call to load controller joystick positions into object's properties
 void PilotInput::getController()
 {
@@ -35,10 +36,15 @@ void PilotInput::refineInput()
     zRefinedRot = zAnalogRot * modifier;
 }
 
-bool PilotInput::getButton()
+bool PilotInput::getCtrlButton(int ctrlButton)
 {
-    return primaryJoy.GetRawButton(5);
+    return primaryJoy.GetRawButton(ctrlButton);
 }
+
+
+/**
+ * OPERATOR INPUT
+ */
 
 OperatorInput::OperatorInput()
 {
@@ -50,6 +56,38 @@ OperatorInput::~OperatorInput()
     //Should probably do this, shouldn't I?
 }
 
+//Returns an int with the current operator mode (drive vs climb)
+int OperatorInput::getControlMode()
+{
+    return this->m_pControlMode;
+}
+
+//Allows Operator to toggle control mode
+void OperatorInput::toggleControlMode(bool toggleButton)
+{
+  //If the button is pressed AND the check-bit is enabled, change the control mode and flip the check latch
+  if (toggleButton && this->m_pControlModeHasChanged)
+  {
+    //Reverse the actuator
+    if (this->m_pControlMode == 0)
+    {
+      this->m_pControlMode = 1;
+    }
+    else
+    {
+      this->m_pControlMode = 0;
+    }
+    //Disables this IF statement until the trigger is released (prevents cycling the cylinder when trigger is held for >10ms)
+    this->m_pControlModeHasChanged = false;
+  }
+
+  //If the trigger is not being pulled, re-enable the toggle
+  if (!toggleButton && !this->m_pControlModeHasChanged)
+  {
+    this->m_pControlModeHasChanged = true;
+  }
+
+}
 
 /**
  * Returns the Joystick X axis
@@ -68,9 +106,13 @@ double OperatorInput::getJoyY()
     return operatorJoy.GetRawAxis(1);
 }
 
+bool OperatorInput::getJoyButton(int joyButton)
+{
+    return operatorJoy.GetRawButton(joyButton);
+}
+
 /**
  * Returns Trigger Position
- * Currently used for Pneumatic Actuator
  */
 bool OperatorInput::getJoyTrigger()
 {

@@ -34,11 +34,11 @@ class MainMast
 
     private:
     //Mast Motor Controllers
-    TalonSRX* m_pMainMastMotor;
-    TalonSRX* m_pMainMastMotorSlave;
+    WPI_TalonSRX* m_pMainMastMotor;
+    WPI_TalonSRX* m_pMainMastMotorSlave;
 
-    //Mast Homing/Limit Switches
-    frc::DigitalInput* m_pLimitSwitchObjects[10];
+    //Test Lift Motor
+    //WPI_TalonSRX* m_pTestLiftMotor;
 
     //Pneumatic Brake for Mast
     //PneumaticActuator* m_pBrakePneumatic;

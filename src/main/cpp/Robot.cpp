@@ -91,7 +91,8 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic()
 {
   //Get latest Limit Switch data
-  m_limitSwitch.updateLimitSwitches();
+  //m_limitSwitch.updateLimitSwitches();
+
 
   //Get Pilot's input data
   Robot::m_pilotInput.getController();
@@ -102,15 +103,52 @@ void Robot::TeleopPeriodic()
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
-  //Toggle Pneumatic Actuator by passing input from Operator Joystick
-  testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
+  //If the pilot hits the button, toggle the gripper
+  m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
+  //Set Gripper Wheel Speed
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 1, -0.5, 0.0));
 
-  //Set Main Mast Power
-  m_mainMast.MastManualControl(m_operatorInput.getJoyY());
-  //double targetPos;
-  //targetPos = m_operatorInput.getJoyY() * 360 * 1.0;
-  //m_mainMast.MastTest(targetPos);
+  //Front Intake is drive, therefor persistant
+  m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyTrigger(), false));
 
+ 
+  //Toggles between DRIVE and LIFT
+  m_operatorInput.toggleControlMode(m_operatorInput.getJoyButton(6));
+
+  
+  //Divide the code into the two drive modes (DRIVE and LIFT)
+  if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
+  {
+    /**
+     * SET Motor Power Levels for DRIVE mode
+     */
+    m_mainMast.MastManualControl(m_operatorInput.getJoyY());
+    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX());
+
+    /**
+     * SET Motor Power Levels TO ZERO for LIFT mode
+     */
+    m_liftSystem.SetFrontArmPower(0);
+    m_liftSystem.SetRearLiftPower(0);
+
+  }
+  else if (m_operatorInput.getControlMode() == 1) //If in LIFT mode
+  {
+    /**
+     * SET Motor Power levels for LIFT mode
+     */
+    //Set Front Lift Arm Power to Joystick Y axis
+    m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
+    m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
+
+    /**
+     * SET Motor Power levels TO ZERO for DRIVE mode
+     */
+    m_mainMast.MastManualControl(0);
+    m_gripper.setGripperPitchPower(0);
+  }
+
+  
 }
 
 void Robot::TestPeriodic() {

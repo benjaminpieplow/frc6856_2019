@@ -6,11 +6,12 @@
 #pragma once
 
 #include <frc/DoubleSolenoid.h>
+#include <iostream>
 
 class PneumaticActuator
 {
     public:
-    PneumaticActuator();
+    PneumaticActuator(int solenoidForwardPort, int solenoidReversePort);
     ~PneumaticActuator();
 
     //Switch the Actuator, will only work on the "rising edge" of the trigger pull
@@ -21,7 +22,9 @@ class PneumaticActuator
 
 
     private:
-    frc::DoubleSolenoid solenoid {4,5};
+    int m_pSolenoidPortOne;
+    int m_pSolenoidPortTwo;
+    frc::DoubleSolenoid* m_pActuator;
 
     //Keep track of current trigger changes
     bool hasChanged = true;

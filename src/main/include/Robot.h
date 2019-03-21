@@ -18,6 +18,8 @@
 #include "MainMast.h"
 #include "Pneumatics.h"
 #include "RobotIO.h"
+#include "LiftSystem.h"
+#include "Gripper.h"
 
 
 
@@ -38,8 +40,12 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
 
-  //Create IO
+  //Create Limit Switches
   LimitSwitchControl m_limitSwitch;
+
+  //Common Methods
+  Common m_common;
+  
   PilotInput m_pilotInput;
   OperatorInput m_operatorInput;
 
@@ -49,7 +55,10 @@ class Robot : public frc::TimedRobot {
   //Create a Mast
   MainMast m_mainMast;
 
-  //Create Testing Pneumatic Cylinder
-  PneumaticActuator testSolenoid;
+  //Create a lift system
+  LiftSystem m_liftSystem;
 
+  //Create a gripper
+  Gripper m_gripper;
+  
 };

@@ -1,9 +1,10 @@
 #include "Pneumatics.h"
 
 
-PneumaticActuator::PneumaticActuator()
+PneumaticActuator::PneumaticActuator(int solenoidForwardPort, int solenoidReversePort)
 {
-  this->solenoid.Set(frc::DoubleSolenoid::kForward);
+  this->m_pActuator = new frc::DoubleSolenoid (solenoidForwardPort,solenoidReversePort);
+  this->m_pActuator->Set(frc::DoubleSolenoid::kForward);
 }
 
 
@@ -19,13 +20,13 @@ void PneumaticActuator::togglePneumaticActuator(bool trigger)
   if (trigger && this->hasChanged)
   {
     //Reverse the actuator
-    if (this->solenoid.Get() == frc::DoubleSolenoid::kForward)
+    if (this->m_pActuator->Get() == frc::DoubleSolenoid::kForward)
     {
-      this->solenoid.Set(frc::DoubleSolenoid::kReverse);
+      this->m_pActuator->Set(frc::DoubleSolenoid::kReverse);
     }
     else
     {
-      this->solenoid.Set(frc::DoubleSolenoid::kForward);
+      this->m_pActuator->Set(frc::DoubleSolenoid::kForward);
     }
     //Disables this IF statement until the trigger is released (prevents cycling the cylinder when trigger is held for >10ms)
     this->hasChanged = false;
@@ -43,10 +44,10 @@ void PneumaticActuator::setPneumaticActuator(bool forwards)
 {
   if (forwards)
   {
-    this->solenoid.Set(frc::DoubleSolenoid::kForward);
+    this->m_pActuator->Set(frc::DoubleSolenoid::kForward);
   }
   else
   {
-    this->solenoid.Set(frc::DoubleSolenoid::kReverse);
+    this->m_pActuator->Set(frc::DoubleSolenoid::kReverse);
   }
 }
