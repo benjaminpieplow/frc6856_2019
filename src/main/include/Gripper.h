@@ -21,9 +21,12 @@ class Gripper
 
     void toggleGripperClaw(bool button);
 
+    void toggleHatchLatch(bool button);
+
     private:
     //Cylinder for the gripper
     PneumaticActuator* m_pGripperCylinder;
+    PneumaticActuator* m_pHatchCylinder;
 
     //Motor for the gripper pitch
     WPI_TalonSRX* m_pGripperPitchMotor;

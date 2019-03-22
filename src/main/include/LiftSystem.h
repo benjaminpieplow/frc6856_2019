@@ -1,3 +1,14 @@
+/**
+ * This was once a great and powerful HAB climb control system,
+ * but the robot ate too many gears and got fat so we removed it.
+ * Sad face.
+ */
+
+
+/**
+ * DISABLED:
+ * Removed Mechanisms b/c robot was fat
+
 #pragma once
 
 
@@ -7,8 +18,10 @@
 #include "GlobalVars.h"
 #include "RobotIO.h"
 
+
 class LiftSystem
 {
+
     public:
     LiftSystem();
     ~LiftSystem();
@@ -19,11 +32,12 @@ class LiftSystem
 
     void SetFrontArmWheelPower(double motorPower);
 
-
-    private:
     WPI_TalonSRX* m_pRearLiftMotor;
     WPI_TalonSRX* m_pFrontLiftMotorMaster;
     WPI_TalonSRX* m_pFrontLiftMotorSlave;
     WPI_VictorSPX* m_pFrontArmWheelMaster;
     WPI_VictorSPX* m_pFrontArmWheelSlave;
+
 };
+
+*/
