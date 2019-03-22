@@ -176,7 +176,7 @@ void MainMast::MastManualControl(double targetPower)
     bool manualMastControlEnabled = true;
 
     //locking the control until driver/pilot presses the button to release manual control
-    while (manualMastControlEnabled == true)
+    if (manualMastControlEnabled == true) {
     {
 
         //CODE TO MANUALLY MOVE TO MAST
@@ -185,7 +185,7 @@ void MainMast::MastManualControl(double targetPower)
         {
             m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle - 0.1) * (targetPower));
         }
-        else if (joystick.GetThrottle < -0.1)
+        else if (joystick.GetThrottle() < -0.1)
         {
             m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle + 0.1) * (targetPower));
         }
@@ -199,7 +199,6 @@ void MainMast::MastManualControl(double targetPower)
         if (joystick.GetRawButtonPressed(6) == true)
         {
             manualMastControlEnabled = false;
-            break;
         }
     }
     return;
