@@ -23,6 +23,8 @@ class Gripper
 
     void toggleHatchLatch(bool button);
 
+    void setHatchLatch(bool button);
+
     private:
     //Cylinder for the gripper
     PneumaticActuator* m_pGripperCylinder;

@@ -23,7 +23,7 @@ driveTrain::driveTrain()
     for (int i = 0; i < 4; i++) {
         //driveWheel[i].Set(ControlMode::PercentOutput, motorPower[i]);
         this->pDriveWheel[i]->ConfigFactoryDefault(10);
-        this->pDriveWheel[i]->ConfigVoltageCompSaturation(10, 10);
+        this->pDriveWheel[i]->ConfigVoltageCompSaturation(12, 10);
     }
 }
 
