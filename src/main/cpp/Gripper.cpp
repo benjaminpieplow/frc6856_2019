@@ -7,8 +7,8 @@
 
 Gripper::Gripper()
 {
-    this->m_pGripperCylinder = new PneumaticActuator(6,7);
-    this->m_pHatchCylinder = new PneumaticActuator(4,5);
+    this->m_pGripperCylinder = new PneumaticActuator(4,5);
+    this->m_pHatchCylinder = new PneumaticActuator(6,7);
     
     this->m_pGripperIntakeMotorMaster = new WPI_TalonSRX(20);
     this->m_pGripperIntakeMotorSlave = new WPI_TalonSRX(21);

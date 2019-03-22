@@ -158,7 +158,7 @@ void Robot::TeleopPeriodic()
   //If the pilot hits the button, toggle the gripper
   m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
   //Set Gripper Wheel Speed
-  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 1, -0.5, 0.0));
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 0.5, -1, 0.0));
 
   //Front Intake is drive, therefor persistant
   //Removed b/c fat robot
