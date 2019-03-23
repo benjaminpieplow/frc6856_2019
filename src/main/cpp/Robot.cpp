@@ -16,13 +16,13 @@
  * Runs at RoboRIO startup, regardless of mode
  * m_chooser is FRC code, the rest setups variables and runtime objects
 */
-void Robot::RobotInit() {
+void Robot::RobotInit()
+{
 
   //This code is here by default and therefore should not be removed
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-
 
   //Calculate motor vector factors
   m_primaryDrive.populateMotorVectorFactors();
@@ -81,7 +81,8 @@ void Robot::AutonomousPeriodic()
   }
 }
 
-void Robot::TeleopInit() {
+void Robot::TeleopInit()
+{
   std::cout << "TeleopInit Complete";
   m_mainMast.MainMastInit();
   //m_mainMast.MastTestInit();
@@ -98,17 +99,21 @@ void Robot::TeleopPeriodic()
   //Set Update ESCs via CAN
   m_primaryDrive.setDriveMotorPower();
 
+  //enable control of the mast
+  m_mainMast.mastControl();
+
   //Toggle Pneumatic Actuator by passing input from Operator Joystick
   testSolenoid.togglePneumaticActuator(m_operatorInput.getJoyTrigger());
 }
 
-void Robot::TestPeriodic() {
+void Robot::TestPeriodic()
+{
 }
 
 #ifndef RUNNING_FRC_TESTS
 
 int main()
-{  
+{
   return frc::StartRobot<Robot>();
 }
 #endif

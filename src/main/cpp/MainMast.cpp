@@ -23,6 +23,15 @@
 //controller joystick
 static frc::Joystick joystick(1);
 
+//mast control, this sets the default mast control to manual, change this with limit switches
+static bool manualMastControlEnabled = true;
+
+//switch to go to in mast auto
+static int mastAutoSwitchNo = 0;
+
+//last switch activated on mast
+static int lastMastSwitch = 0;
+
 MainMast::MainMast()
 {
     //Initialize the Motor Controllers (Note: MainMastMotor MUST be a TalonSRX as it uses an encoder)
@@ -167,39 +176,46 @@ void MainMast::MastTest(double targetPos)
     return;
 }
 
+//MAIN METHOD FOR MAST CONTROL
+void MainMast::mastControl()
+{
+    //this loop checks to see if the pilot has pressed button to toggle manual control
+    if (joystick.GetRawButtonPressed(6) == true)
+    {
+        //this just inverts the mast control bool
+        if (manualMastControlEnabled == true)
+        {
+            manualMastControlEnabled = false;
+        }
+        else if (manualMastControlEnabled == false)
+        {
+            manualMastControlEnabled = true;
+        }
+        MastManualControl(0.75);
+    }
+    return;
+}
+
 /**
  * A testing method to control output power to the MainMast Motor based on operator joystick input
  * (or any double you pass it, takes values form -1 to 1)
  */
 void MainMast::MastManualControl(double targetPower)
 {
-    bool manualMastControlEnabled = true;
-
-    //locking the control until driver/pilot presses the button to release manual control
-    if (manualMastControlEnabled == true) {
+    //CODE TO MANUALLY MOVE TO MAST
+    //NOTE:** the 0.1 in the if is for drift, and so that the driver has some sway in the joystick when braked
+    if (joystick.GetThrottle() > 0)
     {
-
-        //CODE TO MANUALLY MOVE TO MAST
-        //NOTE:** the 0.1 in the if is for drift, and so that the driver has some sway in the joystick when braked
-        if (joystick.GetThrottle() > 0.1)
-        {
-            m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle - 0.1) * (targetPower));
-        }
-        else if (joystick.GetThrottle() < -0.1)
-        {
-            m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle + 0.1) * (targetPower));
-        }
-        else if (joystick.GetThrottle() > -0.1 && joystick.GetThrottle() < 0.1)
-        {
-            m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
-            brakeMast();
-        }
-
-        //CODE TO RELEASE MANUAL CONTROL (joystick button6)
-        if (joystick.GetRawButtonPressed(6) == true)
-        {
-            manualMastControlEnabled = false;
-        }
+        m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle()) * (targetPower));
+    }
+    else if (joystick.GetThrottle() < 0)
+    {
+        m_pMainMastMotor->Set(ControlMode::PercentOutput, (joystick.GetThrottle()) * (targetPower));
+    }
+    else if (joystick.GetThrottle() == 0)
+    {
+        m_pMainMastMotor->Set(ControlMode::PercentOutput, 0);
+        brakeMast();
     }
     return;
 }
@@ -263,6 +279,11 @@ int MainMast::getLimitSwitch()
         {
             return i;
         }
+        else
+        {
+            //no activated switch found
+            return -1;
+        }
     }
 }
 //GETS THE STATE OF THE @PARAM SWITCH
@@ -277,7 +298,7 @@ bool MainMast::getLimitSwitch(int limIndex)
     }
     else
     {
-        std::cout << "Not found" << std::endl;
+        std::cout << "Switch[" << limIndex << "] not found!" << std::endl;
         return false;
     }
 }
@@ -288,20 +309,15 @@ bool MainMast::getLimitSwitch(int limIndex)
 
 */
 //SENDS THE MAST TO A CERTAIN SWITCH
-void MainMast::goToSwitch(int switchNo)
+void MainMast::goToSwitch()
 {
+    int &switchNo = mastAutoSwitchNo;
+    updateLimitSwitches();
 
     std::cout << "Moving to switch " << switchNo << std::endl;
+    //checking if switch is already activated
     if (getLimitSwitch(switchNo) == false)
     {
-        //checking if desired switch is above current one
-        if (getLimitSwitch() > switchNo)
-        {
-        }
-        //checking if desired switch is below current one
-        if (getLimitSwitch() < switchNo)
-        {
-        }
     }
     //returns from member if the switch is already activated
     else

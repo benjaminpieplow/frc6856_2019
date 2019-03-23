@@ -14,7 +14,10 @@ class MainMast
 {
     public:
     MainMast();
-    ~MainMast();
+    
+    ~MainMast() {
+        delete m_pMainMastMotor;
+    }
 
     void MainMastInit();
 
@@ -31,7 +34,7 @@ class MainMast
 
     int updateLimitSwitches();
 
-    void goToSwitch(int switchNo);
+    void goToSwitch();
 
     void brakeMast();
 
@@ -44,6 +47,8 @@ class MainMast
     int getLimitSwitch();
 
     void goToNearestSwitch();
+
+    void mastControl();
 
     private:
     //Mast Motor Controller
