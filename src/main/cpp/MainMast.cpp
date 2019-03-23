@@ -55,7 +55,7 @@ void MainMast::MastManualControl(double targetPower)
 {
     if (targetPower > 0)
     {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, (targetPower * 0.1));
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, (targetPower * 0.2));
     }
     else
     {

@@ -31,9 +31,9 @@ void PilotInput::refineInput()
 {
     //modifier is currently set to calm the robot down, get permission from Dan or Ray before exceeding 0.25
     const double modifier = 1.0;
-    xRefinedVel = PilotInput::presPolSquare(xAnalogVel);
-    yRefinedVel = PilotInput::presPolSquare(yAnalogVel);
-    zRefinedRot = PilotInput::presPolSquare(zAnalogRot);
+    xRefinedVel = PilotInput::presPolSquare(xAnalogVel) * 1;
+    yRefinedVel = PilotInput::presPolSquare(yAnalogVel) * 1;
+    zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 1;
 }
 
 bool PilotInput::getCtrlButton(int ctrlButton)
