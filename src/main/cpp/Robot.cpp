@@ -30,7 +30,6 @@ void Robot::RobotInit() {
   botVideo::StreamBotCameras();
 
   m_mainMast.nukeControllers();
-  
 }
 
 /**
@@ -73,14 +72,67 @@ void Robot::AutonomousInit()
 
 void Robot::AutonomousPeriodic()
 {
-  if (m_autoSelected == kAutoNameCustom)
+  //Get latest Limit Switch data
+  //m_limitSwitch.updateLimitSwitches();
+
+
+  //Get Pilot's input data
+  Robot::m_pilotInput.getController();
+
+  //Calculate per-motor vectors
+  m_primaryDrive.calculateDriveMotorVectors();
+
+  //Set Update ESCs via CAN
+  m_primaryDrive.setDriveMotorPower();
+
+  //If the pilot hits the button, toggle the gripper
+  m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
+  //Set Gripper Wheel Speed
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 1, -0.5, 0.0));
+
+  //Front Intake is drive, therefor persistant
+  //Removed b/c fat robot
+  //m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyTrigger(), false));
+
+  //Trigger now does the HatchLatch
+  m_gripper.toggleGripperClaw(m_operatorInput.getJoyTrigger());
+ 
+  //Toggles between DRIVE and LIFT
+  m_operatorInput.toggleControlMode(m_operatorInput.getJoyButton(6));
+
+  
+  //Divide the code into the two drive modes (DRIVE and LIFT)
+  if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
   {
-    // Custom Auto goes here
+    /**
+     * SET Motor Power Levels for  DRIVE mode
+     */
+    m_mainMast.MastManualControl(m_operatorInput.getJoyY());
+    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX());
+
+    /**
+     * SET Motor Power Levels TO ZERO for LIFT mode
+     */
+    //Fat Robot
+    //m_liftSystem.SetFrontArmPower(0);
+    //m_liftSystem.SetRearLiftPower(0);
   }
-  else
+  else if (m_operatorInput.getControlMode() == 1) //If in LIFT mode
   {
-    // Default Auto goes here
-  }
+    /**
+     * SET Motor Power levels for LIFT mode
+     */
+    //Set Front Lift Arm Power to Joystick Y axis
+    //Fat Robot
+    //m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
+    //m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
+
+    /**
+     * SET Motor Power levels TO ZERO for DRIVE mode
+     */
+    m_mainMast.MastManualControl(0);
+    m_gripper.setGripperPitchPower(0);
+  }  
 }
 
 void Robot::TeleopInit() {
@@ -106,31 +158,34 @@ void Robot::TeleopPeriodic()
   //If the pilot hits the button, toggle the gripper
   m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
   //Set Gripper Wheel Speed
-  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 1, -0.5, 0.0));
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 0.5, -1, 0));
 
   //Front Intake is drive, therefor persistant
-  m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyTrigger(), false));
+  //Removed b/c fat robot
+  //m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyTrigger(), false));
 
+  //Trigger now does the HatchLatch
+  m_gripper.setHatchLatch(m_operatorInput.getJoyTrigger());
  
   //Toggles between DRIVE and LIFT
-  m_operatorInput.toggleControlMode(m_operatorInput.getJoyButton(6));
+  //m_operatorInput.toggleControlMode(m_operatorInput.getJoyButton(6));
 
   
   //Divide the code into the two drive modes (DRIVE and LIFT)
   if (m_operatorInput.getControlMode() == 0) //If in DRIVE mode
   {
     /**
-     * SET Motor Power Levels for DRIVE mode
+     * SET Motor Power Levels for  DRIVE mode
      */
     m_mainMast.MastManualControl(m_operatorInput.getJoyY());
-    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX());
+    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX() * 0.3);
 
     /**
      * SET Motor Power Levels TO ZERO for LIFT mode
      */
-    m_liftSystem.SetFrontArmPower(0);
-    m_liftSystem.SetRearLiftPower(0);
-
+    //Fat Robot
+    //m_liftSystem.SetFrontArmPower(0);
+    //m_liftSystem.SetRearLiftPower(0);
   }
   else if (m_operatorInput.getControlMode() == 1) //If in LIFT mode
   {
@@ -138,17 +193,16 @@ void Robot::TeleopPeriodic()
      * SET Motor Power levels for LIFT mode
      */
     //Set Front Lift Arm Power to Joystick Y axis
-    m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
-    m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
+    //Fat Robot
+    //m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
+    //m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
 
     /**
      * SET Motor Power levels TO ZERO for DRIVE mode
      */
     m_mainMast.MastManualControl(0);
     m_gripper.setGripperPitchPower(0);
-  }
-
-  
+  }  
 }
 
 void Robot::TestPeriodic() {

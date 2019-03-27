@@ -18,8 +18,8 @@ PilotInput::~PilotInput () {}
 //Call to load controller joystick positions into object's properties
 void PilotInput::getController()
 {
-    this->xAnalogVel = primaryJoy.GetRawAxis(0) * -1;
-    this->yAnalogVel = primaryJoy.GetRawAxis(1) * -1;
+    this->xAnalogVel = primaryJoy.GetRawAxis(0);
+    this->yAnalogVel = primaryJoy.GetRawAxis(1);
     this->zAnalogRot = primaryJoy.GetRawAxis(4);
     //refineInput is called here because it is currently processing a safety measure and therefore cannot be missed.
     //In future versions, the refineInput function will be more flexible and therefore called from other areas of the code.
@@ -30,10 +30,10 @@ void PilotInput::getController()
 void PilotInput::refineInput()
 {
     //modifier is currently set to calm the robot down, get permission from Dan or Ray before exceeding 0.25
-    const double modifier = 0.35;
-    xRefinedVel = xAnalogVel * modifier;
-    yRefinedVel = yAnalogVel * modifier;
-    zRefinedRot = zAnalogRot * modifier;
+    const double modifier = 1.0;
+    xRefinedVel = PilotInput::presPolSquare(xAnalogVel) * 1;
+    yRefinedVel = PilotInput::presPolSquare(yAnalogVel) * 1;
+    zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 1;
 }
 
 bool PilotInput::getCtrlButton(int ctrlButton)
@@ -41,6 +41,22 @@ bool PilotInput::getCtrlButton(int ctrlButton)
     return primaryJoy.GetRawButton(ctrlButton);
 }
 
+
+double PilotInput::presPolSquare(double toSquare)
+{
+    if(toSquare > 0)
+    {
+        return (toSquare * toSquare);
+    }
+    else if(toSquare < 0)
+    {
+        return (toSquare * toSquare * -1);
+    }
+    else if (toSquare = 0)
+    {
+        return 0;
+    }
+}
 
 /**
  * OPERATOR INPUT

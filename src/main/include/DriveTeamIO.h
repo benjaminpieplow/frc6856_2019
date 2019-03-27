@@ -2,6 +2,7 @@
 
 #include <frc/Joystick.h>
 #include <frc/WPILib.h>
+#include <cstdlib>
 
 class PilotInput {
     /*
@@ -24,6 +25,9 @@ class PilotInput {
     private:
     //Pilot's Controller
     frc::XboxController primaryJoy{0};
+
+    
+    double presPolSquare(double toSquare);
 
     //Raw Values from Joystick (-1 to 1, 0 at rest)
     double xAnalogVel = 0;
@@ -74,5 +78,6 @@ class OperatorInput
     int m_pControlMode = 0;
 
     bool m_pControlModeHasChanged = false;
+
 
 };

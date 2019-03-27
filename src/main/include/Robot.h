@@ -55,8 +55,8 @@ class Robot : public frc::TimedRobot {
   //Create a Mast
   MainMast m_mainMast;
 
-  //Create a lift system
-  LiftSystem m_liftSystem;
+  //Create a lift system (Disabled b/c robot was fat)
+  //LiftSystem m_liftSystem;
 
   //Create a gripper
   Gripper m_gripper;

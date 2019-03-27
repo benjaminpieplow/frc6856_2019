@@ -53,7 +53,15 @@ void MainMast::MastTest(double targetPos)
  */
 void MainMast::MastManualControl(double targetPower)
 {
-    this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+    if (targetPower > 0)
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, (targetPower * 0.2));
+    }
+    else
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+    }
+    
 }
 
 

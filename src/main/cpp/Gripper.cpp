@@ -8,6 +8,7 @@
 Gripper::Gripper()
 {
     this->m_pGripperCylinder = new PneumaticActuator(4,5);
+    this->m_pHatchCylinder = new PneumaticActuator(6,7);
     
     this->m_pGripperIntakeMotorMaster = new WPI_TalonSRX(20);
     this->m_pGripperIntakeMotorSlave = new WPI_TalonSRX(21);
@@ -28,7 +29,7 @@ Gripper::Gripper()
 
 Gripper::~Gripper()
 {
-
+    this->m_pGripperIntakeMotorMaster->DestroyAllMotControllers();
 }
 
 /**
@@ -45,9 +46,19 @@ void Gripper::setGripperPitchPower(double motorPower)
 }
 
 /**
- * Pass the raw button input to controll toggling of the pneumatic cylinder
+ * Pass the raw button input to control toggling of the pneumatic cylinder
  */
 void Gripper::toggleGripperClaw(bool button)
 {
     this->m_pGripperCylinder->togglePneumaticActuator(button);
+}
+
+void Gripper::toggleHatchLatch(bool button)
+{
+    this->m_pHatchCylinder->togglePneumaticActuator(button);
+}
+
+void Gripper::setHatchLatch(bool button)
+{
+    this->m_pHatchCylinder->setPneumaticActuator(button);
 }
