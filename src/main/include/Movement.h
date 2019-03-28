@@ -14,11 +14,11 @@ This file contains code to actuate movements of the robot, like drivetrain or ar
 
 
 
-class driveTrain
+class omniDrive
 {
     public:
-    driveTrain();
-    ~driveTrain();
+    omniDrive();
+    ~omniDrive();
 
     //This code uses the motor angles, currently set above (may be ported to .conf file in the future), to calculate the applied power factors
     void populateMotorVectorFactors();

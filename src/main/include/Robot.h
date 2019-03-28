@@ -49,8 +49,8 @@ class Robot : public frc::TimedRobot {
   PilotInput m_pilotInput;
   OperatorInput m_operatorInput;
 
-  //Create Drivetrain
-  driveTrain m_primaryDrive;
+  //Create Drivetrain (Note: Select EITHER omniDrive or TankDrive)
+  omniDrive m_primaryDrive;
 
   //Create a Mast
   MainMast m_mainMast;
