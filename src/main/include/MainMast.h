@@ -14,10 +14,8 @@ class MainMast
 {
     public:
     MainMast();
-    
-    ~MainMast() {
-        delete m_pMainMastMotor;
-    }
+
+    ~MainMast();
 
     void MainMastInit();
 
