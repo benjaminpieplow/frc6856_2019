@@ -51,3 +51,52 @@ void PneumaticActuator::setPneumaticActuator(bool forwards)
     this->m_pActuator->Set(frc::DoubleSolenoid::kReverse);
   }
 }
+
+
+
+ManualCompressor::ManualCompressor()
+{
+  this->m_pCompressor = new frc::Compressor(0);
+}
+
+ManualCompressor::~ManualCompressor()
+{
+  //Nope
+}
+
+void ManualCompressor::enableCompressor()
+{
+  this->m_pCompressor->Start();
+}
+
+void ManualCompressor::disableCompressor()
+{
+  this->m_pCompressor->Stop();
+}
+
+void ManualCompressor::toggleCompressor(bool trigger)
+{
+  //If the trigger is pulled AND a switch has not already happened this trigger-pull
+  if (trigger && this->hasChanged)
+  {
+    //Toggle the compressor
+    if (this->m_pCompressor->GetClosedLoopControl())
+    { //Runs if Compressor is Enabled
+      this->m_pCompressor->Stop();
+    }
+    else
+    { //Runs if Compressor is disabled
+      this->m_pCompressor->Start();
+    }
+
+    //Disables this IF statement until the trigger is released (prevents cycling the compressor when trigger is held for >10ms)
+    this->hasChanged = false;
+  }
+
+  //If the trigger is not being pulled, re-enable the toggle
+  if (!trigger && !this->hasChanged)
+  {
+    this->hasChanged = true;
+  }
+
+}

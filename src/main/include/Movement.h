@@ -1,5 +1,5 @@
 /*
-This file contains code to actuate movements of the robot, like drivetrain or arm actuators
+This file contains code to actuate movements of the robot, like omniDrive or arm actuators
 */
 #pragma once
 
@@ -14,11 +14,11 @@ This file contains code to actuate movements of the robot, like drivetrain or ar
 
 
 
-class driveTrain
+class omniDrive
 {
     public:
-    driveTrain();
-    ~driveTrain();
+    omniDrive();
+    ~omniDrive();
 
     //This code uses the motor angles, currently set above (may be ported to .conf file in the future), to calculate the applied power factors
     void populateMotorVectorFactors();
@@ -26,7 +26,7 @@ class driveTrain
     //Use the values set in populateMotorVectorFactors to set the required power for each motor
     void calculateDriveMotorVectors();
 
-    //Apply the set required motor power to each drivetrain motor
+    //Apply the set required motor power to each omniDrive motor
     void setDriveMotorPower();
 
     //Motor power is a value from -1 to 1. Basic implementation sets this from the joystick input, but in future it can be influenced by PID controllers for stabilizing
@@ -42,4 +42,16 @@ class driveTrain
     const double motorAngles[4] = {0.78539816339744830961566084581988, 2.3561944901923449288469825374596, 3.9269908169872415480783042290994, 5.4977871437821381673096259207391};
     //Note: Variable is static, if it changes during runtime it's build team's problem
 
+};
+
+
+class tankDrive
+{
+    public:
+    tankDrive();
+    ~tankDrive();
+    void setTankDrivePower(double yVel, double zRot);
+
+    private:
+    WPI_TalonSRX* pDriveWheel[4];
 };
