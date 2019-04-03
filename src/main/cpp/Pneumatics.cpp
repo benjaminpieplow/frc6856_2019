@@ -66,12 +66,17 @@ ManualCompressor::~ManualCompressor()
 
 void ManualCompressor::enableCompressor()
 {
-  this->m_pCompressor->Start();
+  this->m_pCompressor->SetClosedLoopControl(true);
 }
 
 void ManualCompressor::disableCompressor()
 {
-  this->m_pCompressor->Stop();
+  this->m_pCompressor->SetClosedLoopControl(false);
+}
+
+void ManualCompressor::setCompressor(bool trigger)
+{
+  this->m_pCompressor->SetClosedLoopControl(trigger);
 }
 
 void ManualCompressor::toggleCompressor(bool trigger)
@@ -79,17 +84,15 @@ void ManualCompressor::toggleCompressor(bool trigger)
   //If the trigger is pulled AND a switch has not already happened this trigger-pull
   if (trigger && this->hasChanged)
   {
-    //Toggle the compressor
     if (this->m_pCompressor->GetClosedLoopControl())
-    { //Runs if Compressor is Enabled
-      this->m_pCompressor->Stop();
+    {
+      this->m_pCompressor->SetClosedLoopControl(false);
     }
     else
-    { //Runs if Compressor is disabled
-      this->m_pCompressor->Start();
+    {
+      this->m_pCompressor->SetClosedLoopControl(true);
     }
-
-    //Disables this IF statement until the trigger is released (prevents cycling the compressor when trigger is held for >10ms)
+    //Disables this IF statement until the trigger is released (prevents cycling the cylinder when trigger is held for >10ms)
     this->hasChanged = false;
   }
 

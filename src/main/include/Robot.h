@@ -47,6 +47,7 @@ class Robot : public frc::TimedRobot {
   //Common Methods
   Common m_common;
 
+  ManualCompressor m_pManualCompressor;
   
   PilotInput m_pilotInput;
   OperatorInput m_operatorInput;

@@ -40,7 +40,8 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic()
+{}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -55,19 +56,6 @@ void Robot::RobotPeriodic() {}
  */
 void Robot::AutonomousInit()
 {
-  m_autoSelected = m_chooser.GetSelected();
-  // m_autoSelected = SmartDashboard::GetString("Auto Selector",
-  //     kAutoNameDefault);
-  std::cout << "Auto selected: " << m_autoSelected << std::endl;
-
-  if (m_autoSelected == kAutoNameCustom)
-  {
-    // Custom Auto goes here
-  }
-  else
-  {
-    // Default Auto goes here
-  }
 }
 
 void Robot::AutonomousPeriodic()
@@ -85,6 +73,7 @@ void Robot::TeleopPeriodic()
   //Get latest Limit Switch data
   //m_limitSwitch.updateLimitSwitches();
 
+  m_pManualCompressor.toggleCompressor(m_operatorInput.getJoyButton(11));
 
   //Get Pilot's input data
   Robot::m_pilotInput.getController();

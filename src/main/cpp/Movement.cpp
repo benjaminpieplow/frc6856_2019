@@ -107,8 +107,8 @@ void tankDrive::setTankDrivePower(double yVel, double zRot)
     double lPower = 0.0;
     double rPower = 0.0;
 
-    lPower = yVel + zRot;
-    rPower = yVel - zRot;
+    lPower = -yVel + zRot;
+    rPower = yVel + zRot;
     this->pDriveWheel[0]->Set(ControlMode::PercentOutput, lPower);
     this->pDriveWheel[2]->Set(ControlMode::PercentOutput, rPower);
 }

@@ -37,11 +37,11 @@ class ManualCompressor
     ManualCompressor();
     ~ManualCompressor();
 
-    void initCompressor();
-
     void enableCompressor();
 
     void disableCompressor();
+
+    void setCompressor(bool trigger);
 
     void toggleCompressor(bool trigger);
 
@@ -49,6 +49,5 @@ class ManualCompressor
 
     frc::Compressor *m_pCompressor;
 
-    bool systemPrimed = false;
     bool hasChanged = true;
 };
