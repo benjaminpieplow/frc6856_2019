@@ -30,6 +30,8 @@ class MainMast
 
     void MastManualControl(double targetPower);
 
+    void MastLimitControl(double targetPower, bool upperLimit);
+
     void nukeControllers();
 
     private:
