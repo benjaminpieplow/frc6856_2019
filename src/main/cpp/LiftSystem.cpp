@@ -3,11 +3,6 @@
  */
 
 
-/**
- * DISABLED:
- * Removed Mechanisms b/c robot was fat
-
-
 #include "LiftSystem.h"
 
 
@@ -53,4 +48,3 @@ void LiftSystem::SetFrontArmWheelPower(double motorPower)
 {
     this->m_pFrontArmWheelMaster->Set(ControlMode::PercentOutput, motorPower);
 }
-*/

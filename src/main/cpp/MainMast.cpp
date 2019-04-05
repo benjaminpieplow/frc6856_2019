@@ -64,6 +64,23 @@ void MainMast::MastManualControl(double targetPower)
     
 }
 
+void MainMast::MastLimitControl(double targetPower, bool upperLimit)
+{
+    if (targetPower > 0)
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, (targetPower * 0.2)); 
+    }
+    else if (upperLimit)
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+    }
+    else
+    {
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, 0.0);
+    }
+    
+}
+
 
 /**
  * Resets controllers to factory defaults - There's something in the manual about factory defaults 

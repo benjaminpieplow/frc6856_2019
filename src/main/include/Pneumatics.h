@@ -7,6 +7,7 @@
 
 #include <frc/DoubleSolenoid.h>
 #include <iostream>
+#include <frc/Compressor.h>
 
 class PneumaticActuator
 {
@@ -27,5 +28,26 @@ class PneumaticActuator
     frc::DoubleSolenoid* m_pActuator;
 
     //Keep track of current trigger changes
+    bool hasChanged = true;
+};
+
+class ManualCompressor
+{
+    public:
+    ManualCompressor();
+    ~ManualCompressor();
+
+    void enableCompressor();
+
+    void disableCompressor();
+
+    void setCompressor(bool trigger);
+
+    void toggleCompressor(bool trigger);
+
+    private:
+
+    frc::Compressor *m_pCompressor;
+
     bool hasChanged = true;
 };

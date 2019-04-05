@@ -1,14 +1,3 @@
-/**
- * This was once a great and powerful HAB climb control system,
- * but the robot ate too many gears and got fat so we removed it.
- * Sad face.
- */
-
-
-/**
- * DISABLED:
- * Removed Mechanisms b/c robot was fat
-
 #pragma once
 
 
@@ -39,5 +28,3 @@ class LiftSystem
     WPI_VictorSPX* m_pFrontArmWheelSlave;
 
 };
-
-*/

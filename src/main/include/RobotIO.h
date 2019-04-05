@@ -14,9 +14,6 @@ class LimitSwitchControl
     LimitSwitchControl();
     ~LimitSwitchControl();
 
-    //Create Limit Switches and Zero Array
-    void initLimitSwitches();
-
     //Get values from DI Objects and put into Limit Switch Array
     void updateLimitSwitches();
     
