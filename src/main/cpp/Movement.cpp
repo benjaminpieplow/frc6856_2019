@@ -25,6 +25,8 @@ omniDrive::omniDrive()
         this->pDriveWheel[i]->ConfigFactoryDefault(10);
         this->pDriveWheel[i]->ConfigVoltageCompSaturation(12, 10);
     }
+
+
 }
 
 omniDrive::~omniDrive()
@@ -34,10 +36,7 @@ omniDrive::~omniDrive()
     delete pDriveWheel[1];
     delete pDriveWheel[2]; 
     delete pDriveWheel[3];
-
 }
-
-
 
 
 /**

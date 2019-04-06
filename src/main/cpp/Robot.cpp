@@ -79,7 +79,17 @@ void Robot::TeleopPeriodic()
   Robot::m_pilotInput.getController();
 
   //Send Tank Power to Motors
-  m_pTankDrive.setTankDrivePower(yRefinedVel, zRefinedRot);
+  //m_pTankDrive.setTankDrivePower(yRefinedVel, zRefinedRot);
+
+  //HOTFIX: TankDriveOverride
+  if(m_pilotInput.getCtrlButton(1))
+  {//If Override is pushed, set full forward
+    m_pTankDrive.setTankDrivePower(-1.0, 0);
+  }
+  else
+  {
+    m_pTankDrive.setTankDrivePower(yRefinedVel, zRefinedRot);
+  }
 
   //Calculate per-motor vectors (Omni)
   //m_primaryDrive.calculateDriveMotorVectors();
@@ -89,11 +99,12 @@ void Robot::TeleopPeriodic()
 
   //If the pilot hits the button, toggle the gripper
   m_gripper.toggleGripperClaw(m_pilotInput.getCtrlButton(10));
+  
   //Set Gripper Wheel Speed
-  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(5), m_pilotInput.getCtrlButton(6), 0.5, -1, 0));
+  m_gripper.setGripperIntakeWheels(m_common.twoButtonMotorControl(m_pilotInput.getCtrlButton(6), m_pilotInput.getCtrlButton(5), 1, -0.3, 0));
 
   //Front Intake is drive, therefor persistant
-  m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyTrigger(), false));
+  m_liftSystem.SetFrontArmWheelPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyTrigger()));
 
   //Trigger now does the HatchLatch
   m_gripper.setHatchLatch(m_operatorInput.getJoyTrigger());
@@ -109,7 +120,7 @@ void Robot::TeleopPeriodic()
      * SET Motor Power Levels for  DRIVE mode
      */
     m_mainMast.MastLimitControl(m_operatorInput.getJoyY(), limSwitchStateArr[0]);
-    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX() * 0.3);
+    m_gripper.setGripperPitchPower(m_operatorInput.getJoyX());
 
     /**
      * SET Motor Power Levels TO ZERO for LIFT mode
@@ -123,8 +134,8 @@ void Robot::TeleopPeriodic()
      * SET Motor Power levels for LIFT mode
      */
     //Set Front Lift Arm Power to Joystick Y axis
-    m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY());
-    m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
+    m_liftSystem.SetFrontArmPower(m_operatorInput.getJoyY() * 0.5);
+    //m_liftSystem.SetRearLiftPower(m_common.twoButtonMotorControl(m_operatorInput.getJoyButton(2), m_operatorInput.getJoyButton(3)));
 
     /**
      * SET Motor Power levels TO ZERO for DRIVE mode

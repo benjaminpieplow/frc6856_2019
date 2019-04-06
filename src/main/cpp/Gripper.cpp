@@ -42,7 +42,7 @@ void Gripper::setGripperIntakeWheels(double motorPower)
 
 void Gripper::setGripperPitchPower(double motorPower)
 {
-    this->m_pGripperPitchMotor->Set(ControlMode::PercentOutput, motorPower);
+    this->m_pGripperPitchMotor->Set(ControlMode::PercentOutput, motorPower * 0.3);
 }
 
 /**

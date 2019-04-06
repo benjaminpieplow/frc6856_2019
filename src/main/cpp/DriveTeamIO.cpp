@@ -33,7 +33,22 @@ void PilotInput::refineInput()
     const double modifier = 1.0;
     xRefinedVel = PilotInput::presPolSquare(xAnalogVel) * 1;
     yRefinedVel = PilotInput::presPolSquare(yAnalogVel) * 1;
-    zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 1;
+    
+    if (zAnalogRot > 0.1)
+    {
+        zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 0.3;
+    }
+    else if (zAnalogRot < -0.1)
+    {
+        zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 0.3;
+    }
+    else
+    {
+        zRefinedRot = 0;
+    }
+    
+    
+    //zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 0.3;
 }
 
 bool PilotInput::getCtrlButton(int ctrlButton)

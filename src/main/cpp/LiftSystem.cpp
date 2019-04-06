@@ -26,6 +26,10 @@ LiftSystem::LiftSystem()
     //Slave the slave controllers
     this->m_pFrontArmWheelSlave->Set(ControlMode::Follower, 30);
     this->m_pFrontLiftMotorSlave->Set(ControlMode::Follower, 26);
+
+    //Set Brake Mode
+    this->m_pFrontLiftMotorMaster->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+    this->m_pFrontLiftMotorSlave->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
 }
 
 LiftSystem::~LiftSystem()

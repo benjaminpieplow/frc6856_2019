@@ -14,12 +14,11 @@ MainMast::MainMast()
     this->m_pMainMastMotor->ConfigFactoryDefault();
     this->m_pMainMastMotorSlave->ConfigFactoryDefault();
     
-
     //Set 2nd Motor to slave to Primary Motor Controller
     this->m_pMainMastMotorSlave->Set(ControlMode::Follower, 16);
 
     //Enable Active Braking on the mast motor (reduces coasting)
-    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+    this->m_pMainMastMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
 }
 
 MainMast::~MainMast() {}
@@ -66,13 +65,13 @@ void MainMast::MastManualControl(double targetPower)
 
 void MainMast::MastLimitControl(double targetPower, bool upperLimit)
 {
-    if (targetPower > 0)
+    if (targetPower < 0)
     {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, (targetPower * 0.2)); 
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
     }
     else if (upperLimit)
     {
-        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, targetPower);
+        this->m_pMainMastMotor->Set(ControlMode::PercentOutput, (targetPower * 0.6));
     }
     else
     {
