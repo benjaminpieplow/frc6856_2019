@@ -15,7 +15,7 @@ class PneumaticActuator
     PneumaticActuator(int solenoidForwardPort, int solenoidReversePort);
     ~PneumaticActuator();
 
-    //Switch the Actuator, will only work on the "rising edge" of the trigger pull
+    //Switch the Actuator, will only work on the "rising edge" of the trigger pull (so cylinder doesn't flip-flop)
     void togglePneumaticActuator(bool trigger);
 
     //Set the Actuator State
@@ -23,6 +23,7 @@ class PneumaticActuator
 
 
     private:
+    //Solenoid Ports on PCM
     int m_pSolenoidPortOne;
     int m_pSolenoidPortTwo;
     frc::DoubleSolenoid* m_pActuator;
@@ -33,6 +34,9 @@ class PneumaticActuator
 
 class ManualCompressor
 {
+    /**
+     * Not breaking or skirting the rules, just using up the space between the guidlines efficeintly.
+     */
     public:
     ManualCompressor();
     ~ManualCompressor();

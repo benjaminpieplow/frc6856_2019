@@ -1,5 +1,5 @@
 /*
-This file contains code to actuate movements of the robot, like omniDrive or arm actuators
+This file contains code to actuate movements of the robot, like omniDrive and TankDrive
 */
 #pragma once
 
@@ -46,6 +46,10 @@ class omniDrive
 
 
 class tankDrive
+/**
+ * Note: We coded our own tank drive. Yes, I know, FRC has a tank drive available.
+ * But if something went wrong, I needed to fix it, so I had to know *exactly* how it worked.
+ */
 {
     public:
     tankDrive();

@@ -5,6 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/**
+ * Editor's Note:
+ * Through coffee and care, this code has been convinced to compile.
+ * This project was created with the Robot Periodic Template.
+ */
+
 #include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Camera.h"
@@ -23,11 +29,9 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  //Calculate motor vector factors (Omni)
-  //m_primaryDrive.populateMotorVectorFactors();
-
   //Start Streaming both cameras using default settings
   botVideo::StreamBotCameras();
+  //NOTE: This was made obselete when we switched to video co-processing, but kept as a fall-back.
 
   m_mainMast.nukeControllers();
 }
@@ -60,6 +64,8 @@ void Robot::AutonomousInit()
 
 void Robot::AutonomousPeriodic()
 {
+  //Robot is forced into Autonomous during first 15 seconds of gameplay. This code lets us take manual control of the robot
+  //This lesson was learned the hard way.
   TeleopPeriodic();
 }
 
@@ -73,6 +79,8 @@ void Robot::TeleopPeriodic()
   //Get latest Limit Switch data
   m_limitSwitch.updateLimitSwitches();
 
+  //Regulations state that the compressor must start when the match starts.
+  //Regulations do not state that it must continue to do so
   m_pManualCompressor.toggleCompressor(m_operatorInput.getJoyButton(11));
 
   //Get Pilot's input data
@@ -82,6 +90,7 @@ void Robot::TeleopPeriodic()
   //m_pTankDrive.setTankDrivePower(yRefinedVel, zRefinedRot);
 
   //HOTFIX: TankDriveOverride
+  //Implemented to fix robot turning on platform. Was a traction issue.
   if(m_pilotInput.getCtrlButton(1))
   {//If Override is pushed, set full forward
     m_pTankDrive.setTankDrivePower(-1.0, 0);
@@ -91,6 +100,8 @@ void Robot::TeleopPeriodic()
     m_pTankDrive.setTankDrivePower(yRefinedVel, zRefinedRot);
   }
 
+
+//Old OMNI code left in place because it worked really well.
   //Calculate per-motor vectors (Omni)
   //m_primaryDrive.calculateDriveMotorVectors();
 

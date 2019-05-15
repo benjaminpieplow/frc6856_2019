@@ -48,6 +48,7 @@ class MainMast
     //PWM Pin for Servo Brake
     //frc::PWM* m_pBrakeServo;
 
+    //NOTE FlightStage was never used due to the robot not being built
     /**
      * Track which stage of a mast flight maneuver the robot is in (if we use that)
      * 0 = HALT/E-STOP (motor coast/rest, brake off)

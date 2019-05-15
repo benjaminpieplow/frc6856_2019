@@ -34,6 +34,8 @@ void PilotInput::refineInput()
     xRefinedVel = PilotInput::presPolSquare(xAnalogVel) * 1;
     yRefinedVel = PilotInput::presPolSquare(yAnalogVel) * 1;
     
+    //Deadzone because our controllers' POTs were freezing (and drifting) in the Western arena
+    //Pretty simple, if less than 10% power input, output zero.
     if (zAnalogRot > 0.1)
     {
         zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 0.3;
@@ -47,7 +49,7 @@ void PilotInput::refineInput()
         zRefinedRot = 0;
     }
     
-    
+    //Ramp function to believed to make robot easier to control
     //zRefinedRot = PilotInput::presPolSquare(zAnalogRot) * 0.3;
 }
 
